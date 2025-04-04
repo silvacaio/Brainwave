@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{D477C478-F70F-47F7-A3F2-3D876834A098}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.Core", "src\Brainwave.Core\Brainwave.Core.csproj", "{D3DDFE3C-B671-4EC8-8995-83ABEAAFB8B4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{E7B67E0B-B209-4F1E-9599-042B7D7CAA4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing", "src\EventSourcing\EventSourcing.csproj", "{3938524F-0C5E-4645-84A9-AA8B26A74104}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D3DDFE3C-B671-4EC8-8995-83ABEAAFB8B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3DDFE3C-B671-4EC8-8995-83ABEAAFB8B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3DDFE3C-B671-4EC8-8995-83ABEAAFB8B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3DDFE3C-B671-4EC8-8995-83ABEAAFB8B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3938524F-0C5E-4645-84A9-AA8B26A74104}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3938524F-0C5E-4645-84A9-AA8B26A74104}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3938524F-0C5E-4645-84A9-AA8B26A74104}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3938524F-0C5E-4645-84A9-AA8B26A74104}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D477C478-F70F-47F7-A3F2-3D876834A098} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{D3DDFE3C-B671-4EC8-8995-83ABEAAFB8B4} = {D477C478-F70F-47F7-A3F2-3D876834A098}
+		{3938524F-0C5E-4645-84A9-AA8B26A74104} = {E7B67E0B-B209-4F1E-9599-042B7D7CAA4D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D32D4802-6B63-467E-BB50-77607290FDA4}
+	EndGlobalSection
+EndGlobal
