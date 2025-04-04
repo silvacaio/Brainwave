@@ -6,28 +6,28 @@ namespace Brainwave.Core.DomainObjects
     {
         public Guid Id { get; set; }
 
-        private List<Event> _notificacoes;
-        public IReadOnlyCollection<Event> Notificacoes => _notificacoes?.AsReadOnly();
+        private List<Event> _notifications;
+        public IReadOnlyCollection<Event> Notifications => _notifications?.AsReadOnly();
 
         protected Entity()
         {
             Id = Guid.NewGuid();
         }
 
-        public void AdicionarEvento(Event evento)
+        public void AddEvent(Event evento)
         {
-            _notificacoes = _notificacoes ?? new List<Event>();
-            _notificacoes.Add(evento);
+            _notifications = _notifications ?? new List<Event>();
+            _notifications.Add(evento);
         }
 
-        public void RemoverEvento(Event eventItem)
+        public void RemoveEvent(Event eventItem)
         {
-            _notificacoes?.Remove(eventItem);
+            _notifications?.Remove(eventItem);
         }
 
-        public void LimparEventos()
+        public void ClearEvents()
         {
-            _notificacoes?.Clear();
+            _notifications?.Clear();
         }
 
         public override bool Equals(object obj)
@@ -66,7 +66,7 @@ namespace Brainwave.Core.DomainObjects
             return $"{GetType().Name} [Id={Id}]";
         }
 
-        public virtual bool EhValido()
+        public virtual bool IsValid()
         {
             throw new NotImplementedException();
         }
