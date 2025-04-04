@@ -5,7 +5,7 @@ namespace Brainwave.Curses.Domain
     public interface ICurseRepository : IRepository<Curse>
     {
         Task<IEnumerable<Curse>> GetAll();
-        Task<Curse> GetById(Guid id);
+        Task<Curse?> GetById(Guid id);
 
         void Add(Curse curse);
         void Update(Curse curse);

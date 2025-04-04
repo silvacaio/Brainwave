@@ -5,6 +5,8 @@ namespace Brainwave.Core.DomainObjects
     public abstract class Entity
     {
         public Guid Id { get; set; }
+        public DateTime CreatedAt { get; private set; }
+
 
         private List<Event> _notifications;
         public IReadOnlyCollection<Event> Notifications => _notifications?.AsReadOnly();
@@ -12,6 +14,7 @@ namespace Brainwave.Core.DomainObjects
         protected Entity()
         {
             Id = Guid.NewGuid();
+            CreatedAt = DateTime.Now;
         }
 
         public void AddEvent(Event evento)
