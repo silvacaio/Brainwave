@@ -6,17 +6,17 @@ using Brainwave.Core.Messages;
 
 namespace Brainwave.Curses.Data
 {
-    public class CurseContext : DbContext, IUnitOfWork
+    public class CourseContext : DbContext, IUnitOfWork
     {
         private readonly IMediatorHandler _mediatorHandler;
 
-        public CurseContext(DbContextOptions<CurseContext> options, IMediatorHandler rebusHandler)
+        public CourseContext(DbContextOptions<CourseContext> options, IMediatorHandler mediatorHandler)
             : base(options)
         {
-            _mediatorHandler = rebusHandler ?? throw new ArgumentNullException(nameof(rebusHandler));
+            _mediatorHandler = mediatorHandler ?? throw new ArgumentNullException(nameof(mediatorHandler));
         }
 
-        public DbSet<Curse> Curses { get; set; }
+        public DbSet<Course> Curses { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
 
 
@@ -35,9 +35,9 @@ namespace Brainwave.Curses.Data
                 }
             }
 
-            var sucesso = await base.SaveChangesAsync() > 0;
-            if (sucesso) await _mediatorHandler.PublishEvents(this);
-            return sucesso;
+            var isSuccess = await base.SaveChangesAsync() > 0;
+            if (isSuccess) await _mediatorHandler.PublishEvents(this);
+            return isSuccess;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -53,7 +53,7 @@ namespace Brainwave.Curses.Data
 
             modelBuilder.Ignore<Event>();
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CurseContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CourseContext).Assembly);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;

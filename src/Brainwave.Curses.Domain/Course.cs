@@ -2,16 +2,16 @@
 
 namespace Brainwave.Curses.Domain
 {
-    public class Curse : Entity, IAggregateRoot
+    public class Course : Entity, IAggregateRoot
     {
-        public Curse(string title, string syllabus)
+        public Course(string title, string syllabus)
         {
             Title = title;
             Syllabus = syllabus;
             _lessons = new List<Lesson>();
         }
 
-        protected Curse()
+        protected Course()
         {
             _lessons = new List<Lesson>();
         }

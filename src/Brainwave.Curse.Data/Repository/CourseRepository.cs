@@ -4,33 +4,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Brainwave.Curses.Data.Repository
 {
-    public class CurseRepository : ICurseRepository
+    public class CourseRepository : ICourseRepository
     {
-        private readonly CurseContext _context;
+        private readonly CourseContext _context;
 
-        public CurseRepository(CurseContext context)
+        public CourseRepository(CourseContext context)
         {
             _context = context;
         }
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public void Add(Curse curse)
+        public void Add(Course curse)
         {
             _context.Curses.Add(curse);
         }
 
-        public void Update(Curse curse)
+        public void Update(Course curse)
         {
             _context.Curses.Update(curse);
         }
 
-        public async Task<IEnumerable<Curse>> GetAll()
+        public async Task<IEnumerable<Course>> GetAll()
         {
             return await _context.Curses.ToListAsync();
         }
 
-        public async Task<Curse?> GetById(Guid id)
+        public async Task<Course?> GetById(Guid id)
         {
             return await _context.Curses.FindAsync(id);
         }

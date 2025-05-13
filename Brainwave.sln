@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing", "src\EventSourcing\EventSourcing.csproj", "{3938524F-0C5E-4645-84A9-AA8B26A74104}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Curses", "Curses", "{26147748-04C6-4511-A3B7-5C80505257C1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Courses", "Courses", "{26147748-04C6-4511-A3B7-5C80505257C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.Curses.Domain", "src\Brainwave.Curses.Domain\Brainwave.Curses.Domain.csproj", "{F801F6E5-0D11-4E2B-BFB3-BDE9C21FF3A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.Courses.Domain", "src\Brainwave.Curses.Domain\Brainwave.Courses.Domain.csproj", "{F801F6E5-0D11-4E2B-BFB3-BDE9C21FF3A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.Curses.Application", "src\Brainwave.Curses.Application\Brainwave.Curses.Application.csproj", "{6F20F5BD-455D-448B-99D5-9752E718B107}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.Courses.Application", "src\Brainwave.Curses.Application\Brainwave.Courses.Application.csproj", "{6F20F5BD-455D-448B-99D5-9752E718B107}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.Curses.Data", "src\Brainwave.Curse.Data\Brainwave.Curses.Data.csproj", "{C2CFE8C0-5775-5299-1CAB-2BB55BA23068}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.Courses.Data", "src\Brainwave.Curse.Data\Brainwave.Courses.Data.csproj", "{C2CFE8C0-5775-5299-1CAB-2BB55BA23068}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
