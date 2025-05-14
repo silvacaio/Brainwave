@@ -19,7 +19,7 @@ namespace Brainwave.Curses.Domain
         public Guid CurseId { get; private set; }
 
         // EF Rel.
-        public Curse Curse { get; set; }
+        public Course Curse { get; set; }
 
         internal void AssociateCurse(Guid curseId)
         {

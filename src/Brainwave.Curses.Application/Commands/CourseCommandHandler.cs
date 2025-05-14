@@ -1,6 +1,6 @@
 ﻿namespace Brainwave.Curses.Application.Commands
 {
-    public class CurseCommandHandler
+    public class CourseCommandHandler
     {
     }
 }

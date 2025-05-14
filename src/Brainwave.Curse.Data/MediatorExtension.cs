@@ -5,7 +5,7 @@ namespace Brainwave.Curses.Data
 {
     public static class MediatorExtension
     {
-        public static async Task PublishEvents(this IMediatorHandler mediator, CurseContext ctx)
+        public static async Task PublishEvents(this IMediatorHandler mediator, CourseContext ctx)
         {
             var domainEntities = ctx.ChangeTracker
                 .Entries<Entity>()
