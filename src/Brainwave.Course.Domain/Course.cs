@@ -1,6 +1,6 @@
 ﻿using Brainwave.Core.DomainObjects;
 
-namespace Brainwave.Curses.Domain
+namespace Brainwave.Courses.Domain
 {
     public class Course : Entity, IAggregateRoot
     {
