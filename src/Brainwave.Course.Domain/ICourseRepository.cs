@@ -1,6 +1,6 @@
 ﻿using Brainwave.Core.Data;
 
-namespace Brainwave.Curses.Domain
+namespace Brainwave.Courses.Domain
 {
     public interface ICourseRepository : IRepository<Course>
     {

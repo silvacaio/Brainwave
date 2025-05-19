@@ -1,7 +1,7 @@
 ﻿using Brainwave.Core.Communication.Mediator;
 using Brainwave.Core.DomainObjects;
 
-namespace Brainwave.Curses.Data
+namespace Brainwave.Courses.Data
 {
     public static class MediatorExtension
     {

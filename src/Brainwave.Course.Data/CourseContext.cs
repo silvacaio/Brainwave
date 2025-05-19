@@ -1,10 +1,10 @@
 ﻿using Brainwave.Core.Communication.Mediator;
 using Brainwave.Core.Data;
 using Microsoft.EntityFrameworkCore;
-using Brainwave.Curses.Domain;
 using Brainwave.Core.Messages;
+using Brainwave.Courses.Domain;
 
-namespace Brainwave.Curses.Data
+namespace Brainwave.Courses.Data
 {
     public class CourseContext : DbContext, IUnitOfWork
     {
@@ -16,7 +16,7 @@ namespace Brainwave.Curses.Data
             _mediatorHandler = mediatorHandler ?? throw new ArgumentNullException(nameof(mediatorHandler));
         }
 
-        public DbSet<Course> Curses { get; set; }
+        public DbSet<Course> Courses { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
 
 

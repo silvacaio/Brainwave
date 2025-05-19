@@ -1,8 +1,8 @@
 ﻿using Brainwave.Core.Data;
-using Brainwave.Curses.Domain;
+using Brainwave.Courses.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Brainwave.Curses.Data.Repository
+namespace Brainwave.Courses.Data.Repository
 {
     public class CourseRepository : ICourseRepository
     {
@@ -15,24 +15,24 @@ namespace Brainwave.Curses.Data.Repository
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public void Add(Course curse)
+        public void Add(Course Course)
         {
-            _context.Curses.Add(curse);
+            _context.Courses.Add(Course);
         }
 
-        public void Update(Course curse)
+        public void Update(Course Course)
         {
-            _context.Curses.Update(curse);
+            _context.Courses.Update(Course);
         }
 
         public async Task<IEnumerable<Course>> GetAll()
         {
-            return await _context.Curses.ToListAsync();
+            return await _context.Courses.ToListAsync();
         }
 
         public async Task<Course?> GetById(Guid id)
         {
-            return await _context.Curses.FindAsync(id);
+            return await _context.Courses.FindAsync(id);
         }
 
         public void Add(Lesson lesson)
