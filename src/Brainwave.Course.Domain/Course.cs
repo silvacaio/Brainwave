@@ -1,10 +1,11 @@
 ﻿using Brainwave.Core.DomainObjects;
+using Brainwave.Courses.Domain.ValueObjects;
 
 namespace Brainwave.Courses.Domain
 {
     public class Course : Entity, IAggregateRoot
     {
-        public Course(string title, string syllabus)
+        public Course(string title, Syllabus syllabus)
         {
             Title = title;
             Syllabus = syllabus;
@@ -17,7 +18,7 @@ namespace Brainwave.Courses.Domain
         }
 
         public string Title { get; private set; }
-        public string Syllabus { get; private set; }
+        public Syllabus Syllabus { get; private set; }
 
         private readonly List<Lesson> _lessons;
         public IReadOnlyCollection<Lesson> Lessons => _lessons;
@@ -33,8 +34,19 @@ namespace Brainwave.Courses.Domain
 
         public override bool IsValid()
         {
-            return string.IsNullOrWhiteSpace(Title) == false &&
-                   string.IsNullOrWhiteSpace(Syllabus) == false;
+            //TODO: rever esse codigo
+            return string.IsNullOrWhiteSpace(Title) == false;
+            //   Syllabus.Validate();
+
+        }
+
+
+        public static class CourseFactory
+        {
+            public static Course New(string title, Syllabus syllabus)
+            {
+                return new Course(title, syllabus);
+            }
         }
 
     }

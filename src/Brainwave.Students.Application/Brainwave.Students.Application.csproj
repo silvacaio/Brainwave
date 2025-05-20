@@ -6,9 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Brainwave.Core\Brainwave.Core.csproj" />
-    <ProjectReference Include="..\Brainwave.Course.Domain\Brainwave.Courses.Domain.csproj" />
-  </ItemGroup>
-
 </Project>
