@@ -15,19 +15,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing", "src\EventS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Courses", "Courses", "{26147748-04C6-4511-A3B7-5C80505257C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.Courses.Data", "src\Brainwave.Course.Data\Brainwave.Courses.Data.csproj", "{C2CFE8C0-5775-5299-1CAB-2BB55BA23068}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementCourses.Data", "src\Brainwave.ManagementCourses.Data\Brainwave.ManagementCourses.Data.csproj", "{C2CFE8C0-5775-5299-1CAB-2BB55BA23068}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.Courses.Domain", "src\Brainwave.Course.Domain\Brainwave.Courses.Domain.csproj", "{3CE77818-A59A-B867-D15F-B329D0259959}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementCourses.Domain", "src\Brainwave.ManagementCourses.Domain\Brainwave.ManagementCourses.Domain.csproj", "{3CE77818-A59A-B867-D15F-B329D0259959}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.Courses.Application", "src\Brainwave.Course.Application\Brainwave.Courses.Application.csproj", "{9D3B88AE-2751-2CFB-FA9B-F6DC1DA5DD47}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementCourses.Application", "src\Brainwave.ManagementCourses.Application\Brainwave.ManagementCourses.Application.csproj", "{9D3B88AE-2751-2CFB-FA9B-F6DC1DA5DD47}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Students", "Students", "{6DB20123-6409-4AB9-BC34-BD6E36992092}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.Students.Application", "src\Brainwave.Students.Application\Brainwave.Students.Application.csproj", "{AAA0364E-7788-479E-BAA5-3C27A85E998B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementStudents.Application", "src\Brainwave.ManagementStudents.Application\Brainwave.ManagementStudents.Application.csproj", "{AAA0364E-7788-479E-BAA5-3C27A85E998B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.Students.Domain", "src\Brainwave.Students.Domain\Brainwave.Students.Domain.csproj", "{2F5C82C7-D7A5-49E1-B33A-90D7743221A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementStudents.Domain", "src\Brainwave.ManagementStudents.Domain\Brainwave.ManagementStudents.Domain.csproj", "{2F5C82C7-D7A5-49E1-B33A-90D7743221A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.Students.Data", "src\Brainwave.Students.Data\Brainwave.Students.Data.csproj", "{A02BC07B-889E-4273-8AA6-D0B5EC0B4046}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementStudents.Data", "src\Brainwave.ManagementStudents.Data\Brainwave.ManagementStudents.Data.csproj", "{A02BC07B-889E-4273-8AA6-D0B5EC0B4046}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
