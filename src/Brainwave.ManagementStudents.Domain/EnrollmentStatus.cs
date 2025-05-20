@@ -1,4 +1,4 @@
-﻿namespace Brainwave.Students.Domain
+﻿namespace Brainwave.ManagementStudents.Domain
 {
     public enum EnrollmentStatus
     {

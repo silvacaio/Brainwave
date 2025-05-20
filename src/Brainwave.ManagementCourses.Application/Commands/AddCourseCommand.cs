@@ -2,7 +2,7 @@
 using FluentValidation;
 
 
-namespace Brainwave.Courses.Application.Commands
+namespace Brainwave.ManagementCourses.Application.Commands
 {
     public class AddCourseCommand : Command
     {

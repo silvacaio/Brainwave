@@ -1,8 +1,8 @@
 ﻿using Brainwave.Core.Data;
-using Brainwave.Courses.Domain;
+using Brainwave.ManagementCourses.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Brainwave.Courses.Data.Repository
+namespace Brainwave.ManagementCourses.Data.Repository
 {
     public class CourseRepository : ICourseRepository
     {

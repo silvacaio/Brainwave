@@ -1,6 +1,6 @@
 ﻿using Brainwave.Core.Messages;
 
-namespace Brainwave.Courses.Application.Events
+namespace Brainwave.ManagementCourses.Application.Events
 {
     public class CourseAddedEvent : Event
     {

@@ -1,6 +1,6 @@
 ﻿using Brainwave.Core.DomainObjects;
 
-namespace Brainwave.Courses.Domain
+namespace Brainwave.ManagementCourses.Domain
 {
     public class Lesson : Entity
     {

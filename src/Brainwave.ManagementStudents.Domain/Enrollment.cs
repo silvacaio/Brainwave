@@ -1,6 +1,6 @@
 ﻿using Brainwave.Core.DomainObjects;
 
-namespace Brainwave.Students.Domain
+namespace Brainwave.ManagementStudents.Domain
 {
     public class Enrollment : Entity
     {

@@ -1,6 +1,6 @@
 ﻿using Brainwave.Core.DomainObjects;
 
-namespace Brainwave.Courses.Domain.ValueObjects
+namespace Brainwave.ManagementCourses.Domain.ValueObjects
 {
     public class Syllabus
     {

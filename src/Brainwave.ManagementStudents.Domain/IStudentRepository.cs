@@ -1,6 +1,6 @@
 ﻿using Brainwave.Core.Data;
 
-namespace Brainwave.Students.Domain
+namespace Brainwave.ManagementStudents.Domain
 {
     public interface IStudentRepository : IRepository<Student>
     {

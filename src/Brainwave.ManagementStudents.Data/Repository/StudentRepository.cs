@@ -1,8 +1,8 @@
 ﻿using Brainwave.Core.Data;
-using Brainwave.Students.Domain;
+using Brainwave.ManagementStudents.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Brainwave.Students.Data.Repository
+namespace Brainwave.ManagementStudents.Data.Repository
 {
     public class StudentRepository : IStudentRepository
     {

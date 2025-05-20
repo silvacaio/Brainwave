@@ -1,23 +1,24 @@
 ﻿using Brainwave.Core.Communication.Mediator;
 using Brainwave.Core.Data;
-using Microsoft.EntityFrameworkCore;
 using Brainwave.Core.Messages;
-using Brainwave.Courses.Domain;
+using Brainwave.ManagementStudents.Domain;
+using Microsoft.EntityFrameworkCore;
 
-namespace Brainwave.Courses.Data
+
+namespace Brainwave.ManagementStudents.Data
 {
-    public class CourseContext : DbContext, IUnitOfWork
+    public class StudentContext : DbContext, IUnitOfWork
     {
         private readonly IMediatorHandler _mediatorHandler;
 
-        public CourseContext(DbContextOptions<CourseContext> options, IMediatorHandler mediatorHandler)
+        public StudentContext(DbContextOptions<StudentContext> options, IMediatorHandler mediatorHandler)
             : base(options)
         {
             _mediatorHandler = mediatorHandler ?? throw new ArgumentNullException(nameof(mediatorHandler));
         }
 
-        public DbSet<Course> Courses { get; set; }
-        public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
 
 
         public async Task<bool> Commit()
@@ -53,7 +54,7 @@ namespace Brainwave.Courses.Data
 
             modelBuilder.Ignore<Event>();
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CourseContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(StudentContext).Assembly);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
@@ -61,5 +62,4 @@ namespace Brainwave.Courses.Data
             base.OnModelCreating(modelBuilder);
         }
     }
-
 }

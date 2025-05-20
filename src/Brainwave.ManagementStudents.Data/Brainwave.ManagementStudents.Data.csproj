@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Brainwave.Core\Brainwave.Core.csproj" />
-    <ProjectReference Include="..\Brainwave.Students.Domain\Brainwave.Students.Domain.csproj" />
+    <ProjectReference Include="..\Brainwave.ManagementStudents.Domain\Brainwave.ManagementStudents.Domain.csproj" />
   </ItemGroup>
 
 </Project>

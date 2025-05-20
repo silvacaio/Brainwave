@@ -1,7 +1,7 @@
 ﻿using Brainwave.Core.DomainObjects;
-using Brainwave.Courses.Domain.ValueObjects;
+using Brainwave.ManagementCourses.Domain.ValueObjects;
 
-namespace Brainwave.Courses.Domain
+namespace Brainwave.ManagementCourses.Domain
 {
     public class Course : Entity, IAggregateRoot
     {
