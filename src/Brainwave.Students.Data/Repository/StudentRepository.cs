@@ -15,12 +15,12 @@ namespace Brainwave.Students.Data.Repository
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public void Add(Student student)
+        public async Task Add(Student student)
         {
-            _context.Students.Add(student);
+            await _context.Students.AddAsync(student);
         }
 
-        public void Update(Student student)
+        public async Task Update(Student student)
         {
             _context.Students.Update(student);
         }
@@ -32,15 +32,15 @@ namespace Brainwave.Students.Data.Repository
 
         public async Task<Enrollment?> GetEnrollmentByStudentId(Guid id)
         {
-           return await _context.Enrollments.FirstOrDefaultAsync(e => e.StudentId == id);    
+            return await _context.Enrollments.FirstOrDefaultAsync(e => e.StudentId == id);
         }
 
-        public void Add(Enrollment enrollment)
+        public async Task Add(Enrollment enrollment)
         {
-            _context.Enrollments.Add(enrollment);
+            await _context.Enrollments.AddAsync(enrollment);
         }
 
-        public void Update(Enrollment enrollment)
+        public async Task Update(Enrollment enrollment)
         {
             _context.Enrollments.Update(enrollment);
         }
