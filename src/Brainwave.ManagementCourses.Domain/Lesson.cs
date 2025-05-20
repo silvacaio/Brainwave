@@ -4,11 +4,12 @@ namespace Brainwave.ManagementCourses.Domain
 {
     public class Lesson : Entity
     {
-        public Lesson(Guid curseId, string title, string content, string material)
+        public Lesson(Guid CourseId, string title, string content, string material, Guid courseId)
         {
             Title = title;
             Content = content;
             Material = material;
+            CourseId = courseId;
         }
 
         public string Title { get; private set; }
@@ -16,20 +17,24 @@ namespace Brainwave.ManagementCourses.Domain
         public string Material { get; private set; }
 
 
-        public Guid CurseId { get; private set; }
+        public Guid CourseId { get; private set; }
 
         // EF Rel.
-        public Course Curse { get; set; }
-
-        internal void AssociateCurse(Guid curseId)
-        {
-            CurseId = curseId;
-        }
-
+        public Course Course { get; set; }
+     
         public override bool IsValid()
         {
             return string.IsNullOrWhiteSpace(Title) == false &&
                    string.IsNullOrWhiteSpace(Content) == false;
         }
+
+        public static class LessonFactory
+        {
+            public static Lesson New(string title, string content, string material, Guid courseId)
+            {
+                return new Lesson(Guid.Empty, title, content, material, courseId);
+            }
+        }
+
     }
 }

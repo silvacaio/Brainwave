@@ -27,7 +27,7 @@ namespace Brainwave.ManagementCourses.Domain
         {
             if (!item.IsValid()) return;
 
-            item.AssociateCurse(Id);
+            item.AssociateCourse(Id);
 
             _lessons.Add(item);
         }
