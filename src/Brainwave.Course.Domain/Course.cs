@@ -37,5 +37,14 @@ namespace Brainwave.Courses.Domain
                    string.IsNullOrWhiteSpace(Syllabus) == false;
         }
 
+
+        public static class CourseFactory
+        {
+            public static Course New(string title, string syllabus)
+            {
+                return new Course(title, syllabus);
+            }
+        }
+
     }
 }
