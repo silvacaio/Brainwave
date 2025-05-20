@@ -6,15 +6,19 @@ namespace Brainwave.Courses.Application.Commands
 {
     public class AddCourseCommand : Command
     {
-        public AddCourseCommand(string title, string syllabus, Guid userId)
+        public AddCourseCommand(string title, string syllabusContent, int syllabusDurationInHours, string syllabusLanguage, Guid userId)
         {
             Title = title;
-            Syllabus = syllabus;
+            SyllabusContent = syllabusContent;
+            SyllabusDurationInHours = syllabusDurationInHours;
+            SyllabusLanguage = syllabusLanguage;
             UserId = userId;
         }
 
         public string Title { get; private set; }
-        public string Syllabus { get; private set; }
+        public string SyllabusContent { get; set; }
+        public int SyllabusDurationInHours { get; set; }
+        public string SyllabusLanguage { get; set; }
         public Guid UserId { get; private set; }
 
         public override bool IsValid()
@@ -32,9 +36,17 @@ namespace Brainwave.Courses.Application.Commands
                 .NotEmpty()
                 .WithMessage("Title is required");
 
-            RuleFor(c => c.Syllabus)
+            RuleFor(c => c.SyllabusContent)
                 .NotEmpty()
-                .WithMessage("Syllabus is required");
+                .WithMessage("Syllabus Content is required");
+
+            RuleFor(c => c.SyllabusLanguage)
+         .NotEmpty()
+         .WithMessage("Syllabus languague is required");
+
+            RuleFor(c => c.SyllabusDurationInHours)
+             .GreaterThan(0)
+             .WithMessage("Syllabus duration in hours should be greater than 0");
 
             RuleFor(c => c.UserId)
             .NotEqual(Guid.Empty)

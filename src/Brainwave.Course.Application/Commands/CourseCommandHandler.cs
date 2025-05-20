@@ -3,13 +3,14 @@ using Brainwave.Core.Messages;
 using Brainwave.Courses.Application.Commands;
 using Brainwave.Courses.Application.Events;
 using Brainwave.Courses.Domain;
+using Brainwave.Courses.Domain.ValueObjects;
 using MediatR;
 
 namespace Brainwave.Curses.Application.Commands
 {
     public class CourseCommandHandler : IRequestHandler<AddCourseCommand, bool>
     {
-        private readonly ICommandValidator _commandValidator;        ;
+        private readonly ICommandValidator _commandValidator;
         private readonly ICourseRepository _courseRepository;
 
         public CourseCommandHandler(ICommandValidator commandValidator, ICourseRepository courseRepository)
@@ -25,10 +26,11 @@ namespace Brainwave.Curses.Application.Commands
 
             //TODO: validar se já existe uma course com o mesmo nome?
 
-            var course = Course.CourseFactory.New(request.Title, request.Syllabus);
+            var syllabus = new Syllabus(request.SyllabusContent, request.SyllabusDurationInHours, request.SyllabusLanguage);
+            var course = Course.CourseFactory.New(request.Title, syllabus);
             _courseRepository.Add(course);
 
-            course.AddEvent(new CourseAddedEvent(course.Id, course.Title, course.Syllabus));
+            course.AddEvent(new CourseAddedEvent(course.Id, course.Title));
 
             return await _courseRepository.UnitOfWork.Commit();
         }
