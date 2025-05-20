@@ -1,14 +1,13 @@
 ﻿using Brainwave.Core.DomainObjects;
 
-
 namespace Brainwave.Students.Domain
 {
-    class Student : Entity, IAggregateRoot
+    public class Student : Entity, IAggregateRoot
     {
         private readonly List<Enrollment> _enrollments = [];
         public IReadOnlyCollection<Enrollment> Enrollments => _enrollments;
 
-        public void AdicionarEnrollment(Enrollment Enrollment)
+        public void AddEnrollment(Enrollment Enrollment)
         {
             if (EnrollmentExists(Enrollment))
                 throw new DomainException("Matrícula já existente.");
@@ -19,7 +18,7 @@ namespace Brainwave.Students.Domain
             _enrollments.Add(Enrollment);
         }
 
-        public Enrollment? ObterEnrollment(Guid cursoId)
+        public Enrollment? GetEnrollment(Guid cursoId)
         {
             return Enrollments.FirstOrDefault(m => m.CourseId == cursoId && m.StudentId == Id);
         }
