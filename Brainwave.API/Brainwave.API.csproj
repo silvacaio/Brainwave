@@ -16,6 +16,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Brainwave.Core\Brainwave.Core.csproj" />
+    <ProjectReference Include="..\src\Brainwave.ManagementCourses.Data\Brainwave.ManagementCourses.Data.csproj" />
+    <ProjectReference Include="..\src\Brainwave.ManagementPayment.Data\Brainwave.ManagementPayment.Data.csproj" />
+    <ProjectReference Include="..\src\Brainwave.ManagementStudents.Data\Brainwave.ManagementStudents.Data.csproj" />
   </ItemGroup>
 
 </Project>
