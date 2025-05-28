@@ -50,5 +50,9 @@ namespace Brainwave.ManagementStudents.Data.Repository
             _context.Dispose();
         }
 
+        public async Task Create(Certificate Certificate)
+        {
+           await _context.Certificates.AddAsync(Certificate);
+        }
     }
 }

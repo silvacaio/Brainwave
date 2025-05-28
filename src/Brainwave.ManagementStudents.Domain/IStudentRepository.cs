@@ -12,5 +12,6 @@ namespace Brainwave.ManagementStudents.Domain
         Task<Enrollment?> GetEnrollmentByStudentId(Guid id);
         Task Add(Enrollment enrollment);
         Task Update(Enrollment enrollment);
+        Task Create(Certificate Certificate);
     }
 }

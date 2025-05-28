@@ -20,6 +20,8 @@ namespace Brainwave.ManagementStudents.Data
         public DbSet<Student> Students { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
 
+        public DbSet<Certificate> Certificates { get; set; }
+
 
         public async Task<bool> Commit()
         {
