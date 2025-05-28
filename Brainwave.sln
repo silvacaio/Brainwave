@@ -29,6 +29,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementStudent
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementStudents.Data", "src\Brainwave.ManagementStudents.Data\Brainwave.ManagementStudents.Data.csproj", "{A02BC07B-889E-4273-8AA6-D0B5EC0B4046}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payments", "Payments", "{ADC73D8D-C249-45C9-8B50-38905172E987}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementPayment.Domain", "src\Brainwave.ManagementPayment.Domain\Brainwave.ManagementPayment.Domain.csproj", "{527E4E96-618C-4B36-A719-7D6F6C7E55B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementPayment.Business", "src\Brainwave.ManagementPayment.Business\Brainwave.ManagementPayment.Business.csproj", "{0A5BE3C7-D1DB-4D73-B281-45087F2ADDB1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{94B9BEBE-CA82-4547-8D5F-F2838E8F4693}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.API", "Brainwave.API\Brainwave.API.csproj", "{A92E48F9-9929-409B-AC8A-07BB5BAC2325}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +77,18 @@ Global
 		{A02BC07B-889E-4273-8AA6-D0B5EC0B4046}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A02BC07B-889E-4273-8AA6-D0B5EC0B4046}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A02BC07B-889E-4273-8AA6-D0B5EC0B4046}.Release|Any CPU.Build.0 = Release|Any CPU
+		{527E4E96-618C-4B36-A719-7D6F6C7E55B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{527E4E96-618C-4B36-A719-7D6F6C7E55B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{527E4E96-618C-4B36-A719-7D6F6C7E55B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{527E4E96-618C-4B36-A719-7D6F6C7E55B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A5BE3C7-D1DB-4D73-B281-45087F2ADDB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A5BE3C7-D1DB-4D73-B281-45087F2ADDB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A5BE3C7-D1DB-4D73-B281-45087F2ADDB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A5BE3C7-D1DB-4D73-B281-45087F2ADDB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A92E48F9-9929-409B-AC8A-07BB5BAC2325}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A92E48F9-9929-409B-AC8A-07BB5BAC2325}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A92E48F9-9929-409B-AC8A-07BB5BAC2325}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A92E48F9-9929-409B-AC8A-07BB5BAC2325}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +105,10 @@ Global
 		{AAA0364E-7788-479E-BAA5-3C27A85E998B} = {6DB20123-6409-4AB9-BC34-BD6E36992092}
 		{2F5C82C7-D7A5-49E1-B33A-90D7743221A3} = {6DB20123-6409-4AB9-BC34-BD6E36992092}
 		{A02BC07B-889E-4273-8AA6-D0B5EC0B4046} = {6DB20123-6409-4AB9-BC34-BD6E36992092}
+		{ADC73D8D-C249-45C9-8B50-38905172E987} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{527E4E96-618C-4B36-A719-7D6F6C7E55B6} = {ADC73D8D-C249-45C9-8B50-38905172E987}
+		{0A5BE3C7-D1DB-4D73-B281-45087F2ADDB1} = {ADC73D8D-C249-45C9-8B50-38905172E987}
+		{A92E48F9-9929-409B-AC8A-07BB5BAC2325} = {94B9BEBE-CA82-4547-8D5F-F2838E8F4693}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D32D4802-6B63-467E-BB50-77607290FDA4}

@@ -19,9 +19,9 @@ namespace Brainwave.ManagementCourses.Domain.ValueObjects
             Validate();
         }
 
-        public string Content { get; set; }
-        public int DurationInHours { get; set; }
-        public string Language { get; set; }
+        public string Content { get; private set; }
+        public int DurationInHours { get; private set; }
+        public string Language { get; private set; }
 
         public override string ToString()
         {
