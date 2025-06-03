@@ -5,11 +5,13 @@ namespace Brainwave.ManagementCourses.Domain
 {
     public class Course : Entity, IAggregateRoot
     {
-        public Course(string title, Syllabus syllabus)
+        public Course(string title, decimal value, Syllabus syllabus)
         {
             Title = title;
             Syllabus = syllabus;
             _lessons = new List<Lesson>();
+            Value = value;
+            //TODO: validação
         }
 
         protected Course()
@@ -17,14 +19,14 @@ namespace Brainwave.ManagementCourses.Domain
             _lessons = new List<Lesson>();
         }
 
-        protected Course(Guid id, string title, Syllabus syllabus)
+        protected Course(Guid id, string title, decimal value, Syllabus syllabus) : this(title, value, syllabus)
         {
             Id = id;
-            Title = title;
-            Syllabus = syllabus;
         }
 
         public string Title { get; private set; }
+        public decimal Value { get; private set; }
+
         public Syllabus Syllabus { get; private set; }
 
         private readonly List<Lesson> _lessons;
@@ -34,7 +36,7 @@ namespace Brainwave.ManagementCourses.Domain
         {
             if (!item.IsValid()) return;
 
-            item.AssociateCurse(Id);
+            item.AssociateCourse(Id);
 
             _lessons.Add(item);
         }
@@ -50,14 +52,14 @@ namespace Brainwave.ManagementCourses.Domain
 
         public static class CourseFactory
         {
-            public static Course New(string title, Syllabus syllabus)
+            public static Course New(string title, decimal value, Syllabus syllabus)
             {
-                return new Course(title, syllabus);
+                return new Course(title, value, syllabus);
             }
 
-            public static Course Update(Guid id, string title, Syllabus syllabus)
+            public static Course Update(Guid id, string title, decimal value, Syllabus syllabus)
             {
-                return new Course(id, title, syllabus);
+                return new Course(id, title, value, syllabus);
             }
         }
 

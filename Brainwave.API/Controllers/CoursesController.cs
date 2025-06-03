@@ -2,6 +2,7 @@
 using Brainwave.API.ViewModel;
 using Brainwave.Core.Messages.CommonMessages.Notifications;
 using Brainwave.ManagementCourses.Application.Commands;
+using Brainwave.ManagementCourses.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
