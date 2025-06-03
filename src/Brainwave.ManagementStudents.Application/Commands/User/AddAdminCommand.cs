@@ -1,7 +1,7 @@
 ﻿using Brainwave.Core.Messages;
 using FluentValidation;
 
-namespace Brainwave.ManagementStudents.Application.Commands
+namespace Brainwave.ManagementStudents.Application.Commands.User
 {
     public class AddAdminCommand : Command
     {

@@ -3,7 +3,7 @@ using Brainwave.ManagementStudents.Domain;
 using MediatR;
 using static Brainwave.ManagementStudents.Domain.Student;
 
-namespace Brainwave.ManagementStudents.Application.Commands
+namespace Brainwave.ManagementStudents.Application.Commands.User
 {
     public class UserCommandHandler :
         IRequestHandler<AddStudentCommand, bool>,

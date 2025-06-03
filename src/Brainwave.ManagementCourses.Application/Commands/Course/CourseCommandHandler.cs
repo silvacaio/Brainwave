@@ -1,13 +1,12 @@
 ﻿using Brainwave.Core.Extensions;
 using Brainwave.Core.Messages.CommonMessages.Notifications;
 using Brainwave.Core.Messages;
-using Brainwave.ManagementCourses.Application.Commands;
 using Brainwave.ManagementCourses.Application.Events;
 using Brainwave.ManagementCourses.Domain;
 using Brainwave.ManagementCourses.Domain.ValueObjects;
 using MediatR;
 
-namespace Brainwave.ManagementCourses.Application.Commands
+namespace Brainwave.ManagementCourses.Application.Commands.Course
 {
     public class CourseCommandHandler
         : IRequestHandler<AddCourseCommand, bool>,

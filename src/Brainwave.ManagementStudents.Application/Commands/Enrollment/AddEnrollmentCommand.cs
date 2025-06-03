@@ -1,8 +1,7 @@
-﻿
-using Brainwave.Core.Messages;
+﻿using Brainwave.Core.Messages;
 using FluentValidation;
 
-namespace Brainwave.ManagementStudents.Application.Commands
+namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
 {
     public class AddEnrollmentCommand(Guid studentId, Guid courseId) : Command
     {
