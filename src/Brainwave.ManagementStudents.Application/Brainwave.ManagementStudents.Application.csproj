@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Brainwave.ManagementStudents.Domain\Brainwave.ManagementStudents.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

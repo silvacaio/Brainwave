@@ -2,6 +2,7 @@
 using Brainwave.API.Extensions;
 using Brainwave.API.ViewModel;
 using Brainwave.Core.Messages.CommonMessages.Notifications;
+using Brainwave.ManagementStudents.Application.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -58,7 +59,6 @@ namespace Brainwave.API.Controllers
                 return CustomResponse();
             }
 
-            //TODO; implementar
             var command = new AddStudentCommand(result.UserId, registerUser.Name);
             await _mediator.Send(command);
 
@@ -90,8 +90,7 @@ namespace Brainwave.API.Controllers
                 return CustomResponse();
             }
 
-            //TODO; implementar
-            var command = new AddAdminCommand(result.UserId);
+            var command = new AddAdminCommand(result.UserId, registerUser.Name);
             await _mediator.Send(command);
 
             if (!IsOperationValid())

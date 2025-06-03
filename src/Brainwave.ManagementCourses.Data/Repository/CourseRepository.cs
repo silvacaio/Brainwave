@@ -9,7 +9,6 @@ namespace Brainwave.ManagementCourses.Data.Repository
         private readonly CourseContext _context;
         protected readonly DbSet<Course> DbSet;
 
-
         public CourseRepository(CourseContext context)
         {
             _context = context;

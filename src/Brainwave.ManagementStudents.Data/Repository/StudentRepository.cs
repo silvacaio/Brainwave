@@ -7,42 +7,45 @@ namespace Brainwave.ManagementStudents.Data.Repository
     public class StudentRepository : IStudentRepository
     {
         private readonly StudentContext _context;
+        protected readonly DbSet<Student> _studentDbSet;
+        protected readonly DbSet<Enrollment> _enrollmentDbSet;
+
 
         public StudentRepository(StudentContext context)
         {
             _context = context;
+            _studentDbSet = _context.Set<Student>();
+            _enrollmentDbSet = _context.Set<Enrollment>();
+            _studentDbSet.AsTracking();
+            _enrollmentDbSet.AsTracking();
+
         }
 
         public IUnitOfWork UnitOfWork => _context;
 
         public async Task Add(Student student)
         {
-            await _context.Students.AddAsync(student);
+            await _studentDbSet.AddAsync(student);
         }
 
         public async Task Update(Student student)
         {
-            _context.Students.Update(student);
+            _studentDbSet.Update(student);
         }
 
         public async Task<Student?> GetById(Guid id)
         {
-            return await _context.Students.FindAsync(id);
-        }
-
-        public async Task<Enrollment?> GetEnrollmentByStudentId(Guid id)
-        {
-            return await _context.Enrollments.FirstOrDefaultAsync(e => e.StudentId == id);
+            return await _studentDbSet.FindAsync(id);
         }
 
         public async Task Add(Enrollment enrollment)
         {
-            await _context.Enrollments.AddAsync(enrollment);
+            await _enrollmentDbSet.AddAsync(enrollment);
         }
 
         public async Task Update(Enrollment enrollment)
         {
-            _context.Enrollments.Update(enrollment);
+            _enrollmentDbSet.Update(enrollment);
         }
 
         public void Dispose()
@@ -52,7 +55,22 @@ namespace Brainwave.ManagementStudents.Data.Repository
 
         public async Task Create(Certificate Certificate)
         {
-           await _context.Certificates.AddAsync(Certificate);
+            await _context.Certificates.AddAsync(Certificate);
+        }
+
+        public async Task<IEnumerable<Enrollment>> GetEnrollmentsByStudentId(Guid studentId)
+        {
+            return await _enrollmentDbSet.Where(e => e.StudentId == studentId).ToListAsync();
+        }
+
+        public async Task<Enrollment?> GetEnrollmentByStudentIdAndCourseId(Guid courseId, Guid studentId)
+        {
+            return await _enrollmentDbSet.FirstOrDefaultAsync(e => e.CourseId == courseId && e.StudentId == studentId);
+        }
+
+        public async Task<IEnumerable<Enrollment>> GetPendingPaymentEnrollments(Guid studentId)
+        {
+            return await _enrollmentDbSet.Where(e => e.StudentId == studentId && e.Status == EnrollmentStatus.PendingPayment).ToListAsync();
         }
     }
 }
