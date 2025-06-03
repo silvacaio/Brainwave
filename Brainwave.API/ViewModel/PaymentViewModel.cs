@@ -6,5 +6,6 @@
         public string CardHolderName { get; set; }
         public DateTime ExpirationDate { get; set; }
         public string SecurityCode { get; set; }
+        public decimal Value { get; set; }
     }
 }

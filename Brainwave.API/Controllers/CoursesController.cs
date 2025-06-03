@@ -1,6 +1,7 @@
 ﻿using Brainwave.API.Controllers.Base;
 using Brainwave.API.ViewModel;
 using Brainwave.Core.Messages.CommonMessages.Notifications;
+using Brainwave.ManagementCourses.Application.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +44,7 @@ namespace Brainwave.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CourseViewModel course)
         {
-            var command = new AddCourseCommand(course.Name, course.Content, UserId, course.Value);
+            var command = new AddCourseCommand(course.Title, course.SyllabusContent, course.SyllabusDurationInHours, course.SyllabusLanguage, course.Value, UserId);
             await _mediator.Send(command);
 
             return CustomResponse();
@@ -59,7 +60,7 @@ namespace Brainwave.API.Controllers
                 return CustomResponse();
             }
 
-            var command = new UpdateCourseCommand(course.Id, course.Name, course.Content, course.Value);
+            var command = new UpdateCourseCommand(course.Id, course.Title, course.SyllabusContent, course.SyllabusDurationInHours, course.SyllabusLanguage, course.Value);
             await _mediator.Send(command);
 
             return CustomResponse();
@@ -69,13 +70,14 @@ namespace Brainwave.API.Controllers
         [HttpPost("{courseId:guid}/make-payment")]
         public async Task<IActionResult> MakePayment(Guid courseId, [FromBody] PaymentViewModel paymentData)
         {
-            var command = new ValidateCoursePaymentCommand(
+            var command = new MakeCoursePaymentCommand(
+                UserId,                
                 courseId,
-                UserId,
                 paymentData.CardHolderName,
                 paymentData.CardNumber,
                 paymentData.ExpirationDate,
-                paymentData.SecurityCode
+                paymentData.SecurityCode,
+                paymentData.Value
             );
 
             await _mediator.Send(command);

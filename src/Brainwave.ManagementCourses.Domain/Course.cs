@@ -17,6 +17,13 @@ namespace Brainwave.ManagementCourses.Domain
             _lessons = new List<Lesson>();
         }
 
+        protected Course(Guid id, string title, Syllabus syllabus)
+        {
+            Id = id;
+            Title = title;
+            Syllabus = syllabus;
+        }
+
         public string Title { get; private set; }
         public Syllabus Syllabus { get; private set; }
 
@@ -46,6 +53,11 @@ namespace Brainwave.ManagementCourses.Domain
             public static Course New(string title, Syllabus syllabus)
             {
                 return new Course(title, syllabus);
+            }
+
+            public static Course Update(Guid id, string title, Syllabus syllabus)
+            {
+                return new Course(id, title, syllabus);
             }
         }
 
