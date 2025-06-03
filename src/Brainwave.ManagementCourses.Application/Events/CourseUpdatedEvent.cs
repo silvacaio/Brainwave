@@ -2,12 +2,12 @@
 
 namespace Brainwave.ManagementCourses.Application.Events
 {
-    public class CourseAddedEvent : Event
+    public class CourseUpdatedEvent : Event
     {
-        public CourseAddedEvent(Guid id, string title)
+        public CourseUpdatedEvent(Guid courseId, string title)
         {
-            AggregateId = id;
-            Id = id;
+            AggregateId = courseId;
+            Id = courseId;
             Title = title;
         }
 

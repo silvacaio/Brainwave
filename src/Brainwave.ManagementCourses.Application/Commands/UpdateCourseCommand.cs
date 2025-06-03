@@ -1,39 +1,37 @@
 ﻿using Brainwave.Core.Messages;
 using FluentValidation;
 
-
 namespace Brainwave.ManagementCourses.Application.Commands
 {
-    public class AddCourseCommand : Command
+    public class UpdateCourseCommand : Command
     {
-        public AddCourseCommand(string title, string syllabusContent, int syllabusDurationInHours, string syllabusLanguage, decimal value, Guid userId)
+        public UpdateCourseCommand(Guid id, string title, string syllabusContent, int syllabusDurationInHours, string syllabusLanguage, decimal value)
         {
+            Id = id;
             Title = title;
             SyllabusContent = syllabusContent;
             SyllabusDurationInHours = syllabusDurationInHours;
             SyllabusLanguage = syllabusLanguage;
-            UserId = userId;
-            value = Value;
+            Value = value;
         }
 
-        public string Title { get; private set; }
+        public Guid Id { get;  set; }
+        public string Title { get;  set; }
         public string SyllabusContent { get; set; }
         public int SyllabusDurationInHours { get; set; }
         public string SyllabusLanguage { get; set; }
-        public Guid UserId { get; private set; }
         public decimal Value { get; set; }
-
 
         public override bool IsValid()
         {
-            ValidationResult = new AddCourseCommandValidation().Validate(this);
+            ValidationResult = new UpdateCourseCommandValidation().Validate(this);
             return ValidationResult.IsValid;
         }
     }
 
-    public class AddCourseCommandValidation : AbstractValidator<AddCourseCommand>
+    public class UpdateCourseCommandValidation : AbstractValidator<UpdateCourseCommand>
     {
-        public AddCourseCommandValidation()
+        public UpdateCourseCommandValidation()
         {
             RuleFor(c => c.Title)
                 .NotEmpty()
@@ -51,9 +49,9 @@ namespace Brainwave.ManagementCourses.Application.Commands
              .GreaterThan(0)
              .WithMessage("Syllabus duration in hours should be greater than 0");
 
-            RuleFor(c => c.UserId)
+            RuleFor(c => c.Id)
             .NotEqual(Guid.Empty)
-            .WithMessage("Invalid user");
+            .WithMessage("Invalid course id");
 
             RuleFor(c => c.Value)
            .GreaterThan(0)

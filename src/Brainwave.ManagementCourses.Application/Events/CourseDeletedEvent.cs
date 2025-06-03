@@ -1,10 +1,12 @@
 ﻿using Brainwave.Core.Messages;
+using Brainwave.ManagementCourses.Domain;
 
 namespace Brainwave.ManagementCourses.Application.Events
 {
-    public class CourseAddedEvent : Event
+
+    public class CourseDeletedEvent : Event
     {
-        public CourseAddedEvent(Guid id, string title)
+        public CourseDeletedEvent(Guid id, string title)
         {
             AggregateId = id;
             Id = id;

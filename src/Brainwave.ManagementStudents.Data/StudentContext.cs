@@ -53,7 +53,6 @@ namespace Brainwave.ManagementStudents.Data
                 }
             }
 
-
             modelBuilder.Ignore<Event>();
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(StudentContext).Assembly);
