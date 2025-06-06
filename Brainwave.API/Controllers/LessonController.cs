@@ -5,6 +5,7 @@ using Brainwave.ManagementCourses.Application.Commands.Lesson;
 using Brainwave.ManagementCourses.Application.Queries;
 using Brainwave.ManagementCourses.Domain;
 using Brainwave.ManagementStudents.Application.Commands.StudentLesson;
+using Brainwave.ManagementStudents.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +17,17 @@ namespace Brainwave.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ICourseQueries _courseQueries;
+        private readonly IStudentQueries _studentQueries;
+
         public LessonController(INotificationHandler<DomainNotification> notifications,
             IMediator mediator,
-            ICourseQueries courseQueries)
+            ICourseQueries courseQueries,
+            IStudentQueries studentQueries)
             : base(notifications, mediator)
         {
             _mediator = mediator;
             _courseQueries = courseQueries;
+            _studentQueries = studentQueries;
         }
 
         [Authorize(Roles = "ADMIN")]
@@ -44,16 +49,16 @@ namespace Brainwave.API.Controllers
 
         [Authorize(Roles = "STUDENT")]
         public async Task<IActionResult> Finish([FromBody] FinishStudentLessonViewModel lessonvViewModel)
-        {
+        {         
             var lesson = await _courseQueries.GetLessonByCourseIdAndLessonId(lessonvViewModel.CourseId, lessonvViewModel.LessonId);
-            if(lesson == null)
+            if (lesson == null)
             {
                 NotifyError("Lesson", "The specified lesson does not exist.");
                 return CustomResponse(HttpStatusCode.NotFound);
-            }   
+            }
 
 
-            var command = new FinishLessonCommand(UserId, lessonvViewModel.CourseId , lessonvViewModel.LessonId);
+            var command = new FinishLessonCommand(UserId, lessonvViewModel.CourseId, lessonvViewModel.LessonId);
             await _mediator.Send(command);
 
             return CustomResponse();

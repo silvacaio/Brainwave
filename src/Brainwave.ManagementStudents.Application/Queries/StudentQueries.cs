@@ -19,7 +19,7 @@ namespace Brainwave.ManagementStudents.Application.Queries
 
         public async Task<EnrollmentViewModel?> GetEnrollment(Guid courseId, Guid studentId)
         {
-            var enrollment = await _studentRepository.GetEnrollmentByStudentIdAndCourseId(courseId, studentId);
+            var enrollment = await _studentRepository.GetEnrollmentByCourseIdAndStudentId(courseId, studentId);
             if (enrollment == null)
                 return null;
 
@@ -35,7 +35,7 @@ namespace Brainwave.ManagementStudents.Application.Queries
             return enrollments.Select(CreateEnrollmentViewModel).ToList();
         }
 
-        private static EnrollmentViewModel CreateEnrollmentViewModel(Enrollment enrollment)
+        public static EnrollmentViewModel CreateEnrollmentViewModel(Enrollment enrollment)
         {
             return new EnrollmentViewModel
             {
@@ -64,5 +64,25 @@ namespace Brainwave.ManagementStudents.Application.Queries
 
             return CreateEnrollmentViewModel(enrollment);
         }
+
+        public async Task<IEnumerable<StudentLessonViewModel>> GetStudentLessonsByCourseId(Guid userId, Guid courseId)
+        {
+            var studentLessons = await _studentRepository.GetStudentLessonsByCourseId(userId, courseId);
+            if (studentLessons == null)
+                return Enumerable.Empty<StudentLessonViewModel>();
+
+            return studentLessons.Select(CreateEnrollmentViewModel).ToList();
+        }
+
+        public static StudentLessonViewModel CreateEnrollmentViewModel(StudentLesson studentLesson)
+        {
+            return new StudentLessonViewModel
+            {
+                StudentId = studentLesson.UserId,
+                CourseId = studentLesson.CourseId,
+                LessonId = studentLesson.LessonId
+            };
+        }
     }
 }
+

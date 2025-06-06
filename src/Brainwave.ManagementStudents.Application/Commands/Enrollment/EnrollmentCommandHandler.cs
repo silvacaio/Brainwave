@@ -9,7 +9,8 @@ namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
 {
     public class EnrollmentCommandHandler :
         IRequestHandler<AddEnrollmentCommand, bool>,
-        IRequestHandler<EnrollmentPaidCommand, bool>
+        IRequestHandler<EnrollmentPaidCommand, bool>,
+        IRequestHandler<FinishEnrollmentCommand, bool>
     {
         private readonly ICommandValidator _commandValidator;
         private readonly IStudentRepository _studentRepository;
@@ -34,7 +35,7 @@ namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
                 return false;
             }
 
-            var existingEnrollment = _studentRepository.GetEnrollmentByStudentIdAndCourseId(request.CourseId, request.StudentId);
+            var existingEnrollment = _studentRepository.GetEnrollmentByCourseIdAndStudentId(request.CourseId, request.StudentId);
             if (existingEnrollment != null)
             {
                 await _mediator.Publish(new DomainNotification(request.MessageType, "Enrollment already exists."), cancellationToken);
@@ -63,6 +64,28 @@ namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
 
             existingEnrollment.Activate();
             await _studentRepository.Update(existingEnrollment);
+
+            return await _studentRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(FinishEnrollmentCommand request, CancellationToken cancellationToken)
+        {
+            var enrollment = await _studentRepository.GetEnrollmentByCourseIdAndStudentId(request.CourseId, request.StudentId);
+            if (enrollment == null)
+            {
+                await _mediator.Publish(new DomainNotification(request.MessageType, "Enrollment not found."), cancellationToken);
+                return false;
+            }
+
+            if (enrollment.Status != EnrollmentStatus.Active)
+            {
+                await _mediator.Publish(new DomainNotification(request.MessageType, "Enrollment is not active."), cancellationToken);
+                return false;
+            }
+
+            enrollment.Close();
+            enrollment.AddEvent(new EnrollmentFinishedEvent(request.StudentId, request.CourseId, enrollment.Id));
+            await _studentRepository.Update(enrollment);
 
             return await _studentRepository.UnitOfWork.Commit();
         }

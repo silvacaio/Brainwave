@@ -1,4 +1,5 @@
 ﻿using Brainwave.Core.Messages;
+using FluentValidation;
 
 namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
 {
@@ -16,6 +17,30 @@ namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
             EnrollmentId = enrollmentId;
             PaymentId = paymentId;
             Value = value;
+        }
+
+        public override bool IsValid()
+        {
+            ValidationResult = new EnrollmentPaidCommanddValidation().Validate(this);
+            return ValidationResult.IsValid;
+        }
+    }
+
+    public class EnrollmentPaidCommanddValidation : AbstractValidator<EnrollmentPaidCommand>
+    {
+        public EnrollmentPaidCommanddValidation()
+        {
+            RuleFor(c => c.UserId)
+                .NotEqual(Guid.Empty)
+                .WithMessage("The UserId field cannot be empty.");
+
+            RuleFor(c => c.EnrollmentId)
+                .NotEqual(Guid.Empty)
+                .WithMessage("The EnrollmentId field cannot be empty.");
+
+            RuleFor(c => c.PaymentId)
+                .NotEqual(Guid.Empty)
+                .WithMessage("The PaymentId field cannot be empty.");
         }
     }
 }

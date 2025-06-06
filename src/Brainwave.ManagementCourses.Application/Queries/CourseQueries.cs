@@ -14,7 +14,7 @@ namespace Brainwave.ManagementCourses.Application.Queries
 
         public async Task<CourseViewModel?> GetById(Guid courseId)
         {
-            var course = await _courseRepository.GetById(courseId);
+            var course = await _courseRepository.GetById(courseId, true);
 
             if (course == null)
                 return null;

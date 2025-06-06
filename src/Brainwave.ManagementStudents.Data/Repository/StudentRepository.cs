@@ -66,7 +66,7 @@ namespace Brainwave.ManagementStudents.Data.Repository
             return await _enrollmentDbSet.Where(e => e.StudentId == studentId).ToListAsync();
         }
 
-        public async Task<Enrollment?> GetEnrollmentByStudentIdAndCourseId(Guid courseId, Guid studentId)
+        public async Task<Enrollment?> GetEnrollmentByCourseIdAndStudentId(Guid courseId, Guid studentId)
         {
             return await _enrollmentDbSet.FirstOrDefaultAsync(e => e.CourseId == courseId && e.StudentId == studentId);
         }
@@ -89,6 +89,11 @@ namespace Brainwave.ManagementStudents.Data.Repository
         public async Task Add(StudentLesson newLesson)
         {
             await _studentLessonDbSet.AddAsync(newLesson);
+        }
+
+        public async Task<IEnumerable<StudentLesson>> GetStudentLessonsByCourseId(Guid userId, Guid courseId)
+        {
+            return await _studentLessonDbSet.Where(s => s.UserId == userId && s.CourseId == courseId).ToListAsync();
         }
     }
 }

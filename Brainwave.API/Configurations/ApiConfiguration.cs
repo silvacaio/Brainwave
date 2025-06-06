@@ -1,4 +1,5 @@
 ﻿using Brainwave.API.Data;
+using Brainwave.ManagementStudents.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,12 +14,12 @@ namespace Brainwave.API.Configurations
               options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             //TODO resolver erro
-            //builder.Services.AddDefaultIdentity<IdentityUser>()
-            //       .AddRoles<IdentityRole>()
-            //       .AddEntityFrameworkStores<ApplicationContext>()
-            //       .AddSignInManager()
-            //       .AddRoleManager<RoleManager<IdentityRole>>()
-            //       .AddDefaultTokenProviders();
+            builder.Services.AddDefaultIdentity<IdentityUser<Guid>>()
+            .AddRoles<IdentityRole<Guid>>()
+              .AddEntityFrameworkStores<ApplicationContext>()
+              .AddSignInManager()
+              .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
+              .AddDefaultTokenProviders();
 
 
             builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)

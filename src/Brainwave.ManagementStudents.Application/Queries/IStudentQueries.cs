@@ -1,4 +1,5 @@
 ﻿using Brainwave.ManagementStudents.Application.Queries.ViewModels;
+using Brainwave.ManagementStudents.Domain;
 
 namespace Brainwave.ManagementStudents.Application.Queries
 {
@@ -9,5 +10,6 @@ namespace Brainwave.ManagementStudents.Application.Queries
         Task<CertificateViewModel?> GetCertificate(Guid certificateId, Guid studentId);
         Task<IEnumerable<EnrollmentViewModel>> GetEnrollmentsByUserId(Guid userId);
         Task<EnrollmentViewModel> GetEnrollmentById(Guid enrollmentId);
+        Task<IEnumerable<StudentLessonViewModel>> GetStudentLessonsByCourseId(Guid userId, Guid id);
     }
 }

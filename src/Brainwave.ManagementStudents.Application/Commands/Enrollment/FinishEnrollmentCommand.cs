@@ -1,24 +1,23 @@
 ﻿using Brainwave.Core.Messages;
 using FluentValidation;
 
-namespace Brainwave.ManagementStudents.Application.Commands.StudentLesson
+namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
 {
-    public class FinishLessonCommand(Guid studentId, Guid courseId, Guid lessonId) : Command
+      public class FinishEnrollmentCommand(Guid studentId, Guid courseId) : Command
     {
         public Guid StudentId { get; set; } = studentId;
         public Guid CourseId { get; set; } = courseId;
-        public Guid LessonId { get; set; } = lessonId;
 
         public override bool IsValid()
         {
-            ValidationResult = new FinishLessonCommandValidation().Validate(this);
+            ValidationResult = new FinishEnrollmentCommandValidation().Validate(this);
             return ValidationResult.IsValid;
         }
     }
 
-    public class FinishLessonCommandValidation : AbstractValidator<FinishLessonCommand>
+    public class FinishEnrollmentCommandValidation : AbstractValidator<FinishEnrollmentCommand>
     {
-        public FinishLessonCommandValidation()
+        public FinishEnrollmentCommandValidation()
         {
             RuleFor(c => c.StudentId)
                 .NotEqual(Guid.Empty)
@@ -27,10 +26,6 @@ namespace Brainwave.ManagementStudents.Application.Commands.StudentLesson
             RuleFor(c => c.CourseId)
                 .NotEqual(Guid.Empty)
                 .WithMessage("The CourseId field cannot be empty.");
-
-            RuleFor(c => c.LessonId)
-              .NotEqual(Guid.Empty)
-              .WithMessage("The LessonId field cannot be empty.");
         }
     }
 }

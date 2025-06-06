@@ -1,0 +1,17 @@
+﻿using Brainwave.ManagementStudents.Application.Commands.Cetificates;
+using Brainwave.ManagementStudents.Domain;
+using MediatR;
+
+namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
+{
+    public class CertificateCommandHandler :
+        IRequestHandler<CreateCertificateCommand, bool>
+    {
+        public Task<bool> Handle(CreateCertificateCommand request, CancellationToken cancellationToken)
+        {
+            //TODO FAZER AINDA
+            //var certificate = new Certificate(
+            return Task.FromResult(true);
+        }
+    }
+}

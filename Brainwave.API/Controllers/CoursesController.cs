@@ -4,6 +4,7 @@ using Brainwave.Core.Messages.CommonMessages.Notifications;
 using Brainwave.ManagementCourses.Application.Commands;
 using Brainwave.ManagementCourses.Application.Commands.Course;
 using Brainwave.ManagementCourses.Application.Queries;
+using Brainwave.ManagementStudents.Application.Commands.Enrollment;
 using Brainwave.ManagementStudents.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -82,7 +83,38 @@ namespace Brainwave.API.Controllers
             await _mediator.Send(command);
 
             return CustomResponse();
-        }    
+        }
+
+        [Authorize(Roles = "STUDENT")]
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Finish(Guid id)
+        {
+            var course = await _courseQueries.GetById(id);
+            if (course == null)
+            {
+                NotifyError("Course", "The specified course does not exist.");
+                return CustomResponse(HttpStatusCode.NotFound);
+            }
+
+            var studentLessons = await _studentQueries.GetStudentLessonsByCourseId(UserId, id);
+            if (studentLessons == null || !studentLessons.Any())
+            {
+                NotifyError("Course", "You have not started any lessons in this course.");
+                return CustomResponse(HttpStatusCode.BadRequest);
+            }
+
+
+            if (studentLessons.Count() != course.Lessons.Count())
+            {
+                NotifyError("Course", "You must complete all lessons in the course before finishing it.");
+                return CustomResponse(HttpStatusCode.BadRequest);
+            }
+
+            var command = new FinishEnrollmentCommand(course.Id, UserId);
+            await _mediator.Send(command);
+
+            return CustomResponse();
+        }
 
         [Authorize(Roles = "ADMIN")]
         [HttpDelete("{id:guid}")]

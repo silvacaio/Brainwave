@@ -20,6 +20,11 @@ namespace Brainwave.ManagementStudents.Domain
             Status = EnrollmentStatus.Active;
         }
 
+        public void Close()
+        {
+            Status = EnrollmentStatus.Done;
+        }
+
         public static class EnrollmentPendingPayment
         {
             public static Enrollment Create(Guid studentId, Guid courseId)
