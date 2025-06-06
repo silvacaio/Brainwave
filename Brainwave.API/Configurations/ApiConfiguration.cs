@@ -1,5 +1,4 @@
 ﻿using Brainwave.API.Data;
-using Brainwave.ManagementStudents.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
