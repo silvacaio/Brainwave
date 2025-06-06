@@ -3,7 +3,7 @@ using Brainwave.ManagementCourses.Domain;
 
 namespace Brainwave.ManagementCourses.Application.Queries
 {
-    public class CourseQueries
+    public class CourseQueries : ICourseQueries
     {
         private readonly ICourseRepository _courseRepository;
 
@@ -26,7 +26,7 @@ namespace Brainwave.ManagementCourses.Application.Queries
         {
             var courses = await _courseRepository.GetAll();
 
-            return courses.Select(course => CreateCourseViewModel(course)).ToList();
+            return courses.Select(CreateCourseViewModel).ToList();
 
         }
 
@@ -50,5 +50,14 @@ namespace Brainwave.ManagementCourses.Application.Queries
             };
         }
 
+        public async Task<IEnumerable<CourseViewModel>> GetCoursesNotIn(Guid[] enrolledCourseIds)
+        {
+            var courses = await _courseRepository.GetCoursesNotIn(enrolledCourseIds);
+            if (courses == null || !courses.Any())
+                return Enumerable.Empty<CourseViewModel>();
+
+            return courses.Select(CreateCourseViewModel).ToList();
+
+        }
     }
 }

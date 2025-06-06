@@ -12,6 +12,6 @@ namespace Brainwave.ManagementCourses.Application.Events
         }
 
         public Guid Id { get; set; }
-        public string Title { get; private set; }
+        public string Title { get;  set; }
     }
 }

@@ -45,5 +45,24 @@ namespace Brainwave.ManagementStudents.Application.Queries
                 CreatedAt = enrollment.CreatedAt,
             };
         }
+
+        public async Task<IEnumerable<EnrollmentViewModel>> GetEnrollmentsByUserId(Guid userId)
+        {
+            var enrollments = await _studentRepository.GetEnrollmentsByStudentId(userId);
+
+            if (enrollments == null)
+                return Enumerable.Empty<EnrollmentViewModel>();
+
+            return enrollments.Select(CreateEnrollmentViewModel).ToList();
+        }
+
+        public async Task<EnrollmentViewModel> GetEnrollmentById(Guid enrollmentId)
+        {
+            var enrollment = await _studentRepository.GetEnrollmentsById(enrollmentId);
+            if (enrollment == null)
+                return null;
+
+            return CreateEnrollmentViewModel(enrollment);
+        }
     }
 }

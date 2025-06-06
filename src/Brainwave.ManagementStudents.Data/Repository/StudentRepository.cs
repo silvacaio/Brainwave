@@ -72,5 +72,10 @@ namespace Brainwave.ManagementStudents.Data.Repository
         {
             return await _enrollmentDbSet.Where(e => e.StudentId == studentId && e.Status == EnrollmentStatus.PendingPayment).ToListAsync();
         }
+
+        public async Task<Enrollment?> GetEnrollmentsById(Guid enrollmentId)
+        {
+            return await _enrollmentDbSet.FindAsync(_enrollmentDbSet);
+        }
     }
 }

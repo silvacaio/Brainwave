@@ -1,6 +1,5 @@
 ﻿using Brainwave.Core.Extensions;
 using Brainwave.Core.Messages.CommonMessages.Notifications;
-using Brainwave.Core.Messages;
 using Brainwave.ManagementCourses.Application.Events;
 using Brainwave.ManagementCourses.Domain;
 using Brainwave.ManagementCourses.Domain.ValueObjects;
@@ -39,7 +38,7 @@ namespace Brainwave.ManagementCourses.Application.Commands.Course
             }
 
             var syllabus = new Syllabus(request.SyllabusContent, request.SyllabusDurationInHours, request.SyllabusLanguage);
-            var course = Course.CourseFactory.New(request.Title, syllabus);
+            var course = Domain.Course.CourseFactory.New(request.Title, request.Value, syllabus);
             _courseRepository.Add(course);
 
             course.AddEvent(new CourseAddedEvent(course.Id, course.Title));
@@ -60,7 +59,7 @@ namespace Brainwave.ManagementCourses.Application.Commands.Course
             }
 
             var syllabus = new Syllabus(request.SyllabusContent, request.SyllabusDurationInHours, request.SyllabusLanguage);
-            var updatedCourse = Course.CourseFactory.Update(course.Id, request.Title, syllabus);
+            var updatedCourse = Domain.Course.CourseFactory.Update(course.Id, request.Title, request.Value, syllabus);
 
             _courseRepository.Update(updatedCourse);
             course.AddEvent(new CourseUpdatedEvent(updatedCourse.Id, updatedCourse.Title));
@@ -81,7 +80,7 @@ namespace Brainwave.ManagementCourses.Application.Commands.Course
                 return false;
             }
 
-            if(course.Lessons.Any())
+            if (course.Lessons.Any())
             {
                 await _mediator.Publish(new DomainNotification(request.MessageType, "Cannot delete a course that has lessons."), cancellationToken);
                 return false;

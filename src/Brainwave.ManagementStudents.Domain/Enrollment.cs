@@ -5,13 +5,13 @@ namespace Brainwave.ManagementStudents.Domain
     public class Enrollment : Entity
     {
         public Guid StudentId { get; private set; }
-        public Guid CourseId { get; private set; }        
+        public Guid CourseId { get; private set; }
         public EnrollmentStatus Status { get; private set; }
 
         public Enrollment(Guid studentId, Guid courseId, DateTime registrationTime)
         {
             StudentId = studentId;
-            CourseId = courseId;            
+            CourseId = courseId;
             Status = EnrollmentStatus.PendingPayment;
         }
 

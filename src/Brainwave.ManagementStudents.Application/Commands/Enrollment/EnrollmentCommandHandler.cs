@@ -1,5 +1,6 @@
 ﻿using Brainwave.Core.Extensions;
 using Brainwave.Core.Messages.CommonMessages.Notifications;
+using Brainwave.ManagementStudents.Application.Events;
 using Brainwave.ManagementStudents.Domain;
 using MediatR;
 using static Brainwave.ManagementStudents.Domain.Enrollment;
@@ -7,7 +8,8 @@ using static Brainwave.ManagementStudents.Domain.Enrollment;
 namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
 {
     public class EnrollmentCommandHandler :
-        IRequestHandler<AddEnrollmentCommand, bool>
+        IRequestHandler<AddEnrollmentCommand, bool>,
+        IRequestHandler<EnrollmentPaidCommand, bool>
     {
         private readonly ICommandValidator _commandValidator;
         private readonly IStudentRepository _studentRepository;
@@ -22,8 +24,6 @@ namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
 
         public async Task<bool> Handle(AddEnrollmentCommand request, CancellationToken cancellationToken)
         {
-            //TODO: precisa buscar o curso para validar que existe?
-
             if (_commandValidator.Validate(request) == false)
                 return false;
 
@@ -34,7 +34,6 @@ namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
                 return false;
             }
 
-            //TODO: check if enrollment already exists
             var existingEnrollment = _studentRepository.GetEnrollmentByStudentIdAndCourseId(request.CourseId, request.StudentId);
             if (existingEnrollment != null)
             {
@@ -46,6 +45,25 @@ namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
             await _studentRepository.Add(enrollment);
 
             enrollment.AddEvent(new EnrollmentAddedEvent(enrollment.Id, enrollment.StudentId, enrollment.CourseId));
+            return await _studentRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> Handle(EnrollmentPaidCommand request, CancellationToken cancellationToken)
+        {
+            if (_commandValidator.Validate(request) == false)
+                return false;
+
+            var existingEnrollment = await _studentRepository.GetEnrollmentsById(request.EnrollmentId);
+            if (existingEnrollment == null)
+            {
+                await _mediator.Publish(new DomainNotification(request.MessageType, "Enrollment not found."), cancellationToken);
+                return false;
+            }
+
+
+            existingEnrollment.Activate();
+            await _studentRepository.Update(existingEnrollment);
+
             return await _studentRepository.UnitOfWork.Commit();
         }
     }

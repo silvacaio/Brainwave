@@ -8,12 +8,18 @@ namespace Brainwave.ManagementCourses.Data.Repository
     {
         private readonly CourseContext _context;
         protected readonly DbSet<Course> DbSet;
+        protected readonly DbSet<Lesson> DbSetLesson;
+
 
         public CourseRepository(CourseContext context)
         {
             _context = context;
             DbSet = _context.Set<Course>();
+            DbSetLesson = _context.Set<Lesson>();
+
             DbSet.AsTracking();
+            DbSetLesson.AsTracking();
+
         }
 
         public IUnitOfWork UnitOfWork => _context;
@@ -68,6 +74,16 @@ namespace Brainwave.ManagementCourses.Data.Repository
         public void Delete(Course course)
         {
             DbSet.Remove(course);
+        }
+
+        public async Task<IEnumerable<Course>> GetCoursesNotIn(Guid[] enrolledCourseIds)
+        {
+            return DbSet.Where(c => !enrolledCourseIds.Contains(c.Id));
+        }
+
+        public async Task<Lesson?> GetLessonByCourseIdAndTitle(Guid courseId, string title)
+        {
+            return await DbSetLesson.Where(l => l.CourseId == courseId && l.Title == title).FirstOrDefaultAsync();
         }
     }
 }

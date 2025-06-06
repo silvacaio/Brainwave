@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Brainwave.Core\Brainwave.Core.csproj" />
+    <ProjectReference Include="..\Brainwave.ManagementPayment.Business\Brainwave.ManagementPayment.Application.csproj" />
   </ItemGroup>
 
 </Project>

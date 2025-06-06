@@ -1,6 +1,8 @@
 ﻿using Brainwave.Core.Communication.Mediator;
 using Brainwave.Core.Data;
 using Brainwave.Core.Messages;
+using Brainwave.ManagementPayment.Application;
+using Brainwave.ManagementPayment.Business;
 using Microsoft.EntityFrameworkCore;
 
 namespace Brainwave.ManagementPayment.Data
@@ -14,6 +16,9 @@ namespace Brainwave.ManagementPayment.Data
         {
             _mediatorHandler = mediatorHandler ?? throw new ArgumentNullException(nameof(mediatorHandler));
         }
+
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<PaymentTransaction> PaymentTransactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,4 +1,5 @@
 ﻿using Brainwave.Core.DomainObjects;
+using Brainwave.Core.Messages;
 
 namespace Brainwave.ManagementCourses.Domain
 {
@@ -13,7 +14,7 @@ namespace Brainwave.ManagementCourses.Domain
 
         public string Title { get; private set; }
         public string Content { get; private set; }
-        public string Material { get; private set; }
+        public string? Material { get; private set; }
 
 
         public Guid CourseId { get; private set; }
@@ -30,6 +31,19 @@ namespace Brainwave.ManagementCourses.Domain
         {
             return string.IsNullOrWhiteSpace(Title) == false &&
                    string.IsNullOrWhiteSpace(Content) == false;
+        }
+
+        public static class LessonFactory
+        {
+            public static Lesson New(Guid courseId, string title, string content, string? material)
+            {
+                return new Lesson(courseId, title, content, material);
+            }
+            public static Lesson Update(Guid id, Guid courseId, string title, string content, string? material)
+            {
+                var lesson = new Lesson(courseId, title, content, material) { Id = id };
+                return lesson;
+            }
         }
     }
 }

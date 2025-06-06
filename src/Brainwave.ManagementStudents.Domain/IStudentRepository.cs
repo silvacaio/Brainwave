@@ -15,5 +15,6 @@ namespace Brainwave.ManagementStudents.Domain
         Task Create(Certificate Certificate);
         Task<Enrollment?> GetEnrollmentByStudentIdAndCourseId(Guid courseId, Guid studentId);
         Task<IEnumerable<Enrollment>> GetPendingPaymentEnrollments(Guid studentId);
+        Task<Enrollment?> GetEnrollmentsById(Guid enrollmentId);
     }
 }

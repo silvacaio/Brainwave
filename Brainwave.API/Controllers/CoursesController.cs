@@ -2,7 +2,9 @@
 using Brainwave.API.ViewModel;
 using Brainwave.Core.Messages.CommonMessages.Notifications;
 using Brainwave.ManagementCourses.Application.Commands;
+using Brainwave.ManagementCourses.Application.Commands.Course;
 using Brainwave.ManagementCourses.Application.Queries;
+using Brainwave.ManagementStudents.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,14 +17,17 @@ namespace Brainwave.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ICourseQueries _courseQueries;
+        private readonly IStudentQueries _studentQueries;
 
         public CoursesController(INotificationHandler<DomainNotification> notifications,
                                  IMediator mediator,
-                                 ICourseQueries courseQueries)
+                                 ICourseQueries courseQueries,
+                                 IStudentQueries studentQueries)
             : base(notifications, mediator)
         {
             _mediator = mediator;
             _courseQueries = courseQueries;
+            _studentQueries = studentQueries;
         }
 
         [AllowAnonymous]
@@ -30,6 +35,18 @@ namespace Brainwave.API.Controllers
         public async Task<ActionResult<IEnumerable<CourseViewModel>>> GetAll()
         {
             var courses = await _courseQueries.GetAll();
+            return CustomResponse(courses);
+        }
+
+        [Authorize(Roles = "STUDENT")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<CourseViewModel>>> GetCoursesAvailableForEnrollment()
+        {
+            //TODO: como generalizar isso, caso eu tbm tivesse um MVC?
+            var enrollmentsFromStudent = await _studentQueries.GetEnrollmentsByUserId(UserId);
+            var enrolledCourseIds = enrollmentsFromStudent.Select(e => e.CourseId).ToArray();
+
+            var courses = await _courseQueries.GetCoursesNotIn(enrolledCourseIds);
             return CustomResponse(courses);
         }
 
@@ -65,25 +82,7 @@ namespace Brainwave.API.Controllers
             await _mediator.Send(command);
 
             return CustomResponse();
-        }
-      
-        [Authorize(Roles = "STUDENT")]
-        [HttpPost("{courseId:guid}/make-payment")]
-        public async Task<IActionResult> MakePayment(Guid courseId, [FromBody] PaymentViewModel paymentData)
-        {
-            var command = new MakeCoursePaymentCommand(
-                UserId,                
-                courseId,
-                paymentData.CardHolderName,
-                paymentData.CardNumber,
-                paymentData.ExpirationDate,
-                paymentData.SecurityCode,
-                paymentData.Value
-            );
-
-            await _mediator.Send(command);
-            return CustomResponse();
-        }
+        }    
 
         [Authorize(Roles = "ADMIN")]
         [HttpDelete("{id:guid}")]

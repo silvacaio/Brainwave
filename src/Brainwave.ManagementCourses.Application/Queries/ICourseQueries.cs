@@ -7,5 +7,6 @@ namespace Brainwave.ManagementCourses.Application.Queries
     {
         Task<CourseViewModel?> GetById(Guid courseId);
         Task<IEnumerable<CourseViewModel>> GetAll();
+        Task<IEnumerable<CourseViewModel>> GetCoursesNotIn(Guid[] enrolledCourseIds);
     }
 }
