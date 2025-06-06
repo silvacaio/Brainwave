@@ -6,8 +6,6 @@ namespace Brainwave.ManagementStudents.Domain
     {
         public string StudentName { get; private set; }
         public string CourseName { get; private set; }
-        public DateTime CompletionDate { get; private set; }
-        public byte[] File { get; private set; }
         public Guid StudentId { get; private set; }
         public Guid EnrollmentId { get; private set; }
 
@@ -21,22 +19,12 @@ namespace Brainwave.ManagementStudents.Domain
             CourseName = courseName;
             EnrollmentId = enrollmentId;
             StudentId = studentId;
-            CompletionDate = completionDate;
             Validate();
         }
 
         private string GetDescription()
         {
-            return $"We hereby certify that student {StudentName} successfully completed the course {CourseName} on {CompletionDate:dd/MM/yyyy}.";
-        }
-
-        public void AddFile(byte[] file)
-        {
-            //TODO: é realmente obrigatorio
-            if (file == null || file.Length == 0)
-                throw new DomainException("Invalid certificate file.");
-
-            File = file;
+            return $"We hereby certify that student {StudentName} successfully completed the course {CourseName} on {CreatedAt:dd/MM/yyyy}.";
         }
 
         public void Validate()

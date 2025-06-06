@@ -19,7 +19,7 @@ namespace Brainwave.ManagementStudents.Data
 
         public DbSet<Student> Students { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
-
+        public DbSet<StudentLesson> StudentLessons { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
 
 

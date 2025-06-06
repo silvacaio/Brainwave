@@ -6,20 +6,23 @@ namespace Brainwave.ManagementStudents.Domain
     {
         public Guid StudentId { get; private set; }
         public Guid CourseId { get; private set; }
-        public DateTime RegistrationTime { get; private set; }
         public EnrollmentStatus Status { get; private set; }
 
         public Enrollment(Guid studentId, Guid courseId, DateTime registrationTime)
         {
             StudentId = studentId;
             CourseId = courseId;
-            RegistrationTime = registrationTime;
             Status = EnrollmentStatus.PendingPayment;
         }
 
         public void Activate()
         {
             Status = EnrollmentStatus.Active;
+        }
+
+        public void Close()
+        {
+            Status = EnrollmentStatus.Done;
         }
 
         public static class EnrollmentPendingPayment

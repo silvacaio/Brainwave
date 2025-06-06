@@ -2,14 +2,13 @@
 using Brainwave.API.Extensions;
 using Brainwave.API.ViewModel;
 using Brainwave.Core.Messages.CommonMessages.Notifications;
+using Brainwave.ManagementStudents.Application.Commands.User;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -19,15 +18,15 @@ namespace Brainwave.API.Controllers
     public class AuthenticationController : MainController
     {
         private readonly IMediator _mediator;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser<Guid>> _signInManager;
+        private readonly UserManager<IdentityUser<Guid>> _userManager;
         private readonly JwtSettings _jwtSettings;
 
         public AuthenticationController(
             INotificationHandler<DomainNotification> notifications,
             IMediator mediator,
-            SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser<Guid>> signInManager,
+            UserManager<IdentityUser<Guid>> userManager,
             JwtSettings jwtSettings)
             : base(notifications, mediator)
         {
@@ -58,7 +57,6 @@ namespace Brainwave.API.Controllers
                 return CustomResponse();
             }
 
-            //TODO; implementar
             var command = new AddStudentCommand(result.UserId, registerUser.Name);
             await _mediator.Send(command);
 
@@ -90,8 +88,7 @@ namespace Brainwave.API.Controllers
                 return CustomResponse();
             }
 
-            //TODO; implementar
-            var command = new AddAdminCommand(result.UserId);
+            var command = new AddAdminCommand(result.UserId, registerUser.Name);
             await _mediator.Send(command);
 
             if (!IsOperationValid())
@@ -129,9 +126,9 @@ namespace Brainwave.API.Controllers
             return CustomResponse(loginUser);
         }
 
-        private async Task<(IdentityResult IdentityResult, string UserId)> RegisterUser(RegisterUserViewModel registerUser, string role)
+        private async Task<(IdentityResult IdentityResult, Guid UserId)> RegisterUser(RegisterUserViewModel registerUser, string role)
         {
-            var userIdentity = new IdentityUser
+            var userIdentity = new IdentityUser<Guid>
             {
                 UserName = registerUser.Name,
                 Email = registerUser.Email,
@@ -145,7 +142,7 @@ namespace Brainwave.API.Controllers
                 await _userManager.AddToRoleAsync(userIdentity, role);
             }
 
-            return (result, result.Succeeded ? userIdentity.Id : string.Empty);
+            return (result, result.Succeeded ? userIdentity.Id : Guid.Empty);
         }
 
         public async Task<LoginResponseViewModel> GetJwt(string email)
@@ -157,12 +154,12 @@ namespace Brainwave.API.Controllers
             return BuildLoginResponse(token, user, claims);
         }
 
-        private async Task<List<Claim>> BuildUserClaims(IdentityUser user)
+        private async Task<List<Claim>> BuildUserClaims(IdentityUser<Guid> user)
         {
             var claims = (await _userManager.GetClaimsAsync(user)).ToList();
 
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
@@ -198,7 +195,7 @@ namespace Brainwave.API.Controllers
             return handler.WriteToken(token);
         }
 
-        private LoginResponseViewModel BuildLoginResponse(string token, IdentityUser user, List<Claim> claims)
+        private LoginResponseViewModel BuildLoginResponse(string token, IdentityUser<Guid> user, List<Claim> claims)
         {
             return new LoginResponseViewModel
             {
@@ -206,7 +203,7 @@ namespace Brainwave.API.Controllers
                 ExpiresIn = TimeSpan.FromHours(_jwtSettings.ExpirationHours).TotalSeconds,
                 UserToken = new UserTokenViewModel
                 {
-                    Id = user.Id,
+                    Id = user.Id.ToString(),
                     Email = user.Email,
                     Claims = claims.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
                 }

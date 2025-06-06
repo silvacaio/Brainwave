@@ -1,13 +1,12 @@
 ﻿using Brainwave.Core.Messages;
 
-namespace Brainwave.ManagementCourses.Application.Commands
+namespace Brainwave.ManagementPayment.Application.Commands
 {
-    public class MakeCoursePaymentCommand : Command
+    public class MakePaymentCommand : Command
     {
-        public MakeCoursePaymentCommand(Guid studentId, Guid courseId, string cardNumber, string cardHolderName, DateTime expirationDate, string securityCode, decimal value)
+        public MakePaymentCommand(Guid userId, Guid EnrollmentId, string cardNumber, string cardHolderName, DateTime expirationDate, string securityCode, decimal value)
         {
-            StudentId = studentId;
-            CourseId = courseId;
+            UserId = userId;
             CardNumber = cardNumber;
             CardHolderName = cardHolderName;
             ExpirationDate = expirationDate;
@@ -15,9 +14,8 @@ namespace Brainwave.ManagementCourses.Application.Commands
             Value = value;
         }
 
-        public Guid StudentId { get; set; }
-        public Guid CourseId { get; set; }
-        //public Guid EnrollmentId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid EnrollmentId { get; set; }
         public string CardNumber { get; set; }
         public string CardHolderName { get; set; }
         public DateTime ExpirationDate { get; set; }
