@@ -16,7 +16,6 @@ namespace Brainwave.ManagementCourses.Domain
         public string Content { get; private set; }
         public string? Material { get; private set; }
 
-
         public Guid CourseId { get; private set; }
 
         // EF Rel.
@@ -38,11 +37,6 @@ namespace Brainwave.ManagementCourses.Domain
             public static Lesson New(Guid courseId, string title, string content, string? material)
             {
                 return new Lesson(courseId, title, content, material);
-            }
-            public static Lesson Update(Guid id, Guid courseId, string title, string content, string? material)
-            {
-                var lesson = new Lesson(courseId, title, content, material) { Id = id };
-                return lesson;
             }
         }
     }

@@ -9,6 +9,8 @@ namespace Brainwave.ManagementStudents.Data.Repository
         private readonly StudentContext _context;
         protected readonly DbSet<Student> _studentDbSet;
         protected readonly DbSet<Enrollment> _enrollmentDbSet;
+        protected readonly DbSet<StudentLesson> _studentLessonDbSet;
+
 
 
         public StudentRepository(StudentContext context)
@@ -16,9 +18,10 @@ namespace Brainwave.ManagementStudents.Data.Repository
             _context = context;
             _studentDbSet = _context.Set<Student>();
             _enrollmentDbSet = _context.Set<Enrollment>();
+            _studentLessonDbSet = _context.Set<StudentLesson>();
             _studentDbSet.AsTracking();
             _enrollmentDbSet.AsTracking();
-
+            _studentLessonDbSet.AsTracking();
         }
 
         public IUnitOfWork UnitOfWork => _context;
@@ -76,6 +79,16 @@ namespace Brainwave.ManagementStudents.Data.Repository
         public async Task<Enrollment?> GetEnrollmentsById(Guid enrollmentId)
         {
             return await _enrollmentDbSet.FindAsync(_enrollmentDbSet);
+        }
+
+        public async Task<StudentLesson?> GetLessonByStudentIdAndCourseIdAndLessonId(Guid studentId, Guid courseId, Guid lessonId)
+        {
+            return await _studentLessonDbSet.FirstOrDefaultAsync(s => s.UserId == studentId && s.CourseId == courseId && s.LessonId == lessonId);
+        }
+
+        public async Task Add(StudentLesson newLesson)
+        {
+            await _studentLessonDbSet.AddAsync(newLesson);
         }
     }
 }

@@ -3,6 +3,8 @@ using Brainwave.API.ViewModel;
 using Brainwave.Core.Messages.CommonMessages.Notifications;
 using Brainwave.ManagementCourses.Application.Commands.Lesson;
 using Brainwave.ManagementCourses.Application.Queries;
+using Brainwave.ManagementCourses.Domain;
+using Brainwave.ManagementStudents.Application.Commands.StudentLesson;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +22,7 @@ namespace Brainwave.API.Controllers
             : base(notifications, mediator)
         {
             _mediator = mediator;
-            _courseQueries = courseQueries; 
+            _courseQueries = courseQueries;
         }
 
         [Authorize(Roles = "ADMIN")]
@@ -39,5 +41,23 @@ namespace Brainwave.API.Controllers
 
             return CustomResponse();
         }
+
+        [Authorize(Roles = "STUDENT")]
+        public async Task<IActionResult> Finish([FromBody] FinishStudentLessonViewModel lessonvViewModel)
+        {
+            var lesson = await _courseQueries.GetLessonByCourseIdAndLessonId(lessonvViewModel.CourseId, lessonvViewModel.LessonId);
+            if(lesson == null)
+            {
+                NotifyError("Lesson", "The specified lesson does not exist.");
+                return CustomResponse(HttpStatusCode.NotFound);
+            }   
+
+
+            var command = new FinishLessonCommand(UserId, lessonvViewModel.CourseId , lessonvViewModel.LessonId);
+            await _mediator.Send(command);
+
+            return CustomResponse();
+        }
+
     }
 }

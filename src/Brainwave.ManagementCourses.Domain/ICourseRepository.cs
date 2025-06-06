@@ -16,5 +16,6 @@ namespace Brainwave.ManagementCourses.Domain
         void Delete(Course course);
         Task<IEnumerable<Course>> GetCoursesNotIn(Guid[] enrolledCourseIds);
         Task<Lesson?> GetLessonByCourseIdAndTitle(Guid courseId, string title);
+        Task<Lesson?> GetLessonByIdAndCourseId(Guid lessonId, Guid courseId);
     }
 }

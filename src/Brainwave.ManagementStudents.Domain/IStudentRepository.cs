@@ -16,5 +16,7 @@ namespace Brainwave.ManagementStudents.Domain
         Task<Enrollment?> GetEnrollmentByStudentIdAndCourseId(Guid courseId, Guid studentId);
         Task<IEnumerable<Enrollment>> GetPendingPaymentEnrollments(Guid studentId);
         Task<Enrollment?> GetEnrollmentsById(Guid enrollmentId);
+        Task<StudentLesson?> GetLessonByStudentIdAndCourseIdAndLessonId(Guid studentId, Guid courseId, Guid lessonId);
+        Task Add(StudentLesson newLesson);
     }
 }

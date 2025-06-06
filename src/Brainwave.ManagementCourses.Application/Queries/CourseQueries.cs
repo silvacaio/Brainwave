@@ -59,5 +59,25 @@ namespace Brainwave.ManagementCourses.Application.Queries
             return courses.Select(CreateCourseViewModel).ToList();
 
         }
+
+        public async Task<LessonViewModel> GetLessonByCourseIdAndLessonId(Guid courseId, Guid lessonId)
+        {
+            var lesson = await _courseRepository.GetLessonByIdAndCourseId(lessonId, courseId);
+            if (lesson == null)
+                return null;
+
+            return CreateLessonViewModel(lesson);
+        }
+
+        private LessonViewModel CreateLessonViewModel(Lesson lesson)
+        {
+            return new LessonViewModel
+            {
+                Id = lesson.Id,
+                Title = lesson.Title,
+                Content = lesson.Content,
+                Material = lesson.Material
+            };
+        }
     }
 }

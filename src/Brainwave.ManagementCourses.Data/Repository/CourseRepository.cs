@@ -85,5 +85,10 @@ namespace Brainwave.ManagementCourses.Data.Repository
         {
             return await DbSetLesson.Where(l => l.CourseId == courseId && l.Title == title).FirstOrDefaultAsync();
         }
+
+        public async Task<Lesson?> GetLessonByIdAndCourseId(Guid lessonId, Guid courseId)
+        {
+            return await DbSetLesson.Where(l => l.CourseId == courseId && l.Id == lessonId).FirstOrDefaultAsync();
+        }
     }
 }

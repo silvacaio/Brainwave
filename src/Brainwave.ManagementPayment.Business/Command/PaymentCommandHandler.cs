@@ -39,7 +39,7 @@ namespace Brainwave.ManagementPayment.Application.Commands
                 return false;
             }
 
-            payment.AddEvent(new EnrollmentPaidEvent(transaction.EnrollmentId, transaction.PaymentId, transaction.Value));
+            payment.AddEvent(new EnrollmentPaidEvent(request.UserId, transaction.EnrollmentId, transaction.PaymentId, transaction.Value));
 
             _paymentRepository.Add(payment);
             _paymentRepository.AddTransaction(transaction);
