@@ -25,51 +25,52 @@ namespace Brainwave.API.Configurations
 {
     public static class DependencyInjection
     {
-        public static void RegisterServices(this IServiceCollection services)
+        public static WebApplicationBuilder RegisterServices(this WebApplicationBuilder builder)
         {
             // Mediator
-            services.AddScoped<IMediatorHandler, MediatorHandler>();
+            builder.Services.AddScoped<IMediatorHandler, MediatorHandler>();
 
             // Notifications
-            services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+            builder.Services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
-            services.AddScoped<ICommandValidator, CommandValidator>();
+            builder.Services.AddScoped<ICommandValidator, CommandValidator>();
 
             // Event Sourcing
-            services.AddSingleton<IEventStoreService, EventStoreService>();
-            services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
+            builder.Services.AddSingleton<IEventStoreService, EventStoreService>();
+            builder.Services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
 
             //Course
-            services.AddScoped<ICourseRepository, CourseRepository>();
-            services.AddScoped<ICourseQueries, CourseQueries>();
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<ICourseQueries, CourseQueries>();
 
 
-            services.AddScoped<IRequestHandler<AddCourseCommand, bool>, CourseCommandHandler>();
-            services.AddScoped<IRequestHandler<UpdateCourseCommand, bool>, CourseCommandHandler>();
-            services.AddScoped<IRequestHandler<DeleteCourseCommand, bool>, CourseCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<AddCourseCommand, bool>, CourseCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<UpdateCourseCommand, bool>, CourseCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<DeleteCourseCommand, bool>, CourseCommandHandler>();
 
-            services.AddScoped<IRequestHandler<AddLessonCommand, bool>, LessonCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<AddLessonCommand, bool>, LessonCommandHandler>();
 
 
             //Student
-            services.AddScoped<IStudentRepository, StudentRepository>();
-            services.AddScoped<IStudentQueries, StudentQueries>();
+            builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+            builder.Services.AddScoped<IStudentQueries, StudentQueries>();
 
-            services.AddScoped<IRequestHandler<AddEnrollmentCommand, bool>, EnrollmentCommandHandler>();
-            services.AddScoped<IRequestHandler<EnrollmentPaidCommand, bool>, EnrollmentCommandHandler>();
-            services.AddScoped<IRequestHandler<FinishEnrollmentCommand, bool>, EnrollmentCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<AddEnrollmentCommand, bool>, EnrollmentCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<EnrollmentPaidCommand, bool>, EnrollmentCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<FinishEnrollmentCommand, bool>, EnrollmentCommandHandler>();
 
-            services.AddScoped<IRequestHandler<FinishLessonCommand, bool>, StudentLessonCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<FinishLessonCommand, bool>, StudentLessonCommandHandler>();
 
-            services.AddScoped<IRequestHandler<AddStudentCommand, bool>, UserCommandHandler>();
-            services.AddScoped<IRequestHandler<AddAdminCommand, bool>, UserCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<AddStudentCommand, bool>, UserCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<AddAdminCommand, bool>, UserCommandHandler>();
 
             //Payment
 
-            services.AddScoped<IPaymentRepository, PaymentRepository>();
-            services.AddScoped<ICreditCardPaymentFacade, CreditCardPaymentFacade>();
-            services.AddScoped<IRequestHandler<MakePaymentCommand, bool>, PaymentCommandHandler>();
+            builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+            builder.Services.AddScoped<ICreditCardPaymentFacade, CreditCardPaymentFacade>();
+            builder.Services.AddScoped<IRequestHandler<MakePaymentCommand, bool>, PaymentCommandHandler>();
 
+            return builder;
 
         }
     }

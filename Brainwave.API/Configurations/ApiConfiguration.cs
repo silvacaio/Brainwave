@@ -9,17 +9,6 @@ namespace Brainwave.API.Configurations
     {
         public static WebApplicationBuilder AddApiConfiguration(this WebApplicationBuilder builder)
         {
-            builder.Services.AddDbContext<ApplicationContext>(options =>
-              options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-            //TODO resolver erro
-            builder.Services.AddDefaultIdentity<IdentityUser<Guid>>()
-            .AddRoles<IdentityRole<Guid>>()
-              .AddEntityFrameworkStores<ApplicationContext>()
-              .AddSignInManager()
-              .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
-              .AddDefaultTokenProviders();
-
 
             builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
           .AddJsonFile("appsettings.json", true, true)

@@ -1,19 +1,12 @@
 using Brainwave.API.Configurations;
-
-
 var builder = WebApplication.CreateBuilder(args);
-
-
 builder
-    .AddDbContextConfiguration()
     .AddJwt()
+    .AddDbContextConfiguration(Brainwave.Core.Enums.EDatabases.SQLite)
     .AddApiConfiguration()
-     //.RegisterServices()
-     //  .AddAutoMapperConfig()
-     .AddJwt()
-     .AddSwaggerConfiguration();
+    .RegisterServices()
+    .AddSwaggerConfiguration();
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
