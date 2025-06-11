@@ -1,21 +1,17 @@
-﻿using Brainwave.Core.Communication.Mediator;
-using Brainwave.Core.Data;
+﻿using Brainwave.Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Brainwave.Core.Messages;
 using Brainwave.ManagementCourses.Domain;
 using Brainwave.Core.DomainObjects;
+using MediatR;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace Brainwave.ManagementCourses.Data
 {
-    public class CourseContext : DbContext, IUnitOfWork
+    public class CoursesContext(DbContextOptions<CoursesContext> options,
+                                      IMediator mediator) : DbContext(options), IUnitOfWork
     {
-        private readonly IMediatorHandler _mediatorHandler;
-
-        public CourseContext(DbContextOptions<CourseContext> options, IMediatorHandler mediatorHandler)
-            : base(options)
-        {
-            _mediatorHandler = mediatorHandler ?? throw new ArgumentNullException(nameof(mediatorHandler));
-        }
 
         public DbSet<Course> Courses { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
@@ -44,7 +40,7 @@ namespace Brainwave.ManagementCourses.Data
         public async Task<bool> Commit()
         {
             var isSuccess = await base.SaveChangesAsync() > 0;
-            if (isSuccess) await _mediatorHandler.PublishEvents(this);
+            if (isSuccess) await mediator.PublishEvents(this);
             return isSuccess;
         }
 
@@ -53,6 +49,8 @@ namespace Brainwave.ManagementCourses.Data
             // modelBuilder.ApplyConfiguration(new CourseConfiguration());
             //   modelBuilder.ApplyConfiguration(new LessonConfiguration());
             //            modelBuilder.ApplyConfiguration(new ProgressLessonsConfiguration());
+
+
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
@@ -65,13 +63,38 @@ namespace Brainwave.ManagementCourses.Data
 
             modelBuilder.Ignore<Event>();
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CourseContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CoursesContext).Assembly);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
             base.OnModelCreating(modelBuilder);
         }
+    }
+
+    public class CourseConfiguration : IEntityTypeConfiguration<Course>
+    {
+        public void Configure(EntityTypeBuilder<Course> builder)
+        {
+
+            builder.HasKey(c => c.Id);
+
+            builder.OwnsOne(c => c.Syllabus, syllabus =>
+                {
+                    syllabus.Property(s => s.Content)
+                            .HasColumnName("SyllabusContent")
+                            .IsRequired();
+
+                    syllabus.Property(s => s.DurationInHours)
+                            .HasColumnName("SyllabusDurationInHours")
+                            .IsRequired();
+
+                    syllabus.Property(s => s.Language)
+                            .HasColumnName("SyllabusLanguage")
+                            .IsRequired();
+                });
+        }
+        
     }
 
 }

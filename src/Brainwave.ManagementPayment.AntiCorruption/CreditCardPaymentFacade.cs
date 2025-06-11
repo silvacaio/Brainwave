@@ -1,5 +1,6 @@
 ﻿using Brainwave.ManagementPayment.Application;
 using Brainwave.ManagementPayment.Business;
+using static Brainwave.ManagementPayment.Application.PaymentTransaction;
 
 namespace Brainwave.ManagementPayment.AntiCorruption
 {
@@ -25,21 +26,14 @@ namespace Brainwave.ManagementPayment.AntiCorruption
             var paymentResult = _payPalGateway.CommitTransaction(cardHashKey, payment.EnrollmentId.ToString(), payment.Value);
 
             // TODO: O gateway de payments que deve retornar o objeto transação
-            var transacao = new PaymentTransaction
-            {
-                EnrollmentId = payment.EnrollmentId,
-                Value = payment.Value,
-                PaymentId = payment.Id
-            };
 
             if (paymentResult)
             {
-                transacao.StatusTransaction = StatusTransaction.Paid;
-                return transacao;
+                return PaymentTransactionFactory.Paid(payment.EnrollmentId, payment.Id, payment.Value);
             }
 
-            transacao.StatusTransaction = StatusTransaction.Refused;
-            return transacao;
+            return PaymentTransactionFactory.Refused(payment.EnrollmentId, payment.Id, payment.Value);
+
         }
     }
 }

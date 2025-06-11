@@ -1,11 +1,11 @@
-﻿using Brainwave.Core.Communication.Mediator;
-using Brainwave.Core.DomainObjects;
+﻿using Brainwave.Core.DomainObjects;
+using MediatR;
 
 namespace Brainwave.ManagementCourses.Data
 {
     public static class MediatorExtension
     {
-        public static async Task PublishEvents(this IMediatorHandler mediator, CourseContext ctx)
+        public static async Task PublishEvents(this IMediator mediator, CoursesContext ctx)
         {
             var domainEntities = ctx.ChangeTracker
                 .Entries<Entity>()
@@ -21,7 +21,7 @@ namespace Brainwave.ManagementCourses.Data
             var tasks = domainEvents
                 .Select(async (domainEvent) =>
                 {
-                    await mediator.PublishEvent(domainEvent);
+                    await mediator.Publish(domainEvent);
                 });
 
             await Task.WhenAll(tasks);

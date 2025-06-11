@@ -29,7 +29,14 @@ namespace Brainwave.ManagementPayment.Application.Commands
         {
             var creditCart = new CreditCard(request.CardNumber, request.CardHolderName, request.ExpirationDate, request.SecurityCode);
 
-            var payment = new Payment(request.EnrollmentId, request.Value, creditCart);
+            var payment = new Payment(request.EnrollmentId, request.Value);
+            payment.AddCreditCard(creditCart);
+
+            if(payment.IsValid() == false)
+            {
+                await _mediator.Publish(new DomainNotification(request.MessageType, "Invalid payment details."), cancellationToken);
+                return false;
+            }
 
             var transaction = _creditCardPaymentFacade.ProcessPayment(payment);
 

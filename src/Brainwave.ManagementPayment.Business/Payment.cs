@@ -1,15 +1,20 @@
 ﻿using Brainwave.Core.DomainObjects;
+using Brainwave.ManagementPayment.Application;
 using Brainwave.ManagementPayment.Business.ValueObjects;
-using System.Transactions;
 
 namespace Brainwave.ManagementPayment.Business
 {
     public class Payment : Entity, IAggregateRoot
     {
-        public Payment(Guid enrollmentId, decimal value, CreditCard creditCard)
+        public Payment(Guid enrollmentId, decimal value)
         {
             EnrollmentId = enrollmentId;
             Value = value;
+        }
+
+        public void AddCreditCard(CreditCard creditCard)
+        {
+            if (creditCard == null || !creditCard.IsValid()) return;
             CreditCard = creditCard;
         }
 
@@ -20,6 +25,6 @@ namespace Brainwave.ManagementPayment.Business
 
         // EF. Rel.
 
-        public Transaction Transaction { get; private set; }
+        public PaymentTransaction Transaction { get; private set; }
     }
 }

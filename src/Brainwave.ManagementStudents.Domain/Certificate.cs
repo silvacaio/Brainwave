@@ -13,7 +13,7 @@ namespace Brainwave.ManagementStudents.Domain
         public Student Student { get; set; }
         public Enrollment Enrollment { get; set; }
 
-        public Certificate(string studentName, string courseName, Guid enrollmentId, Guid studentId, DateTime completionDate)
+        public Certificate(string studentName, string courseName, Guid enrollmentId, Guid studentId)
         {
             StudentName = studentName;
             CourseName = courseName;

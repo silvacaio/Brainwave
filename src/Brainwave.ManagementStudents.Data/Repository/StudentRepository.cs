@@ -6,14 +6,14 @@ namespace Brainwave.ManagementStudents.Data.Repository
 {
     public class StudentRepository : IStudentRepository
     {
-        private readonly StudentContext _context;
+        private readonly StudentsContext _context;
         protected readonly DbSet<Student> _studentDbSet;
         protected readonly DbSet<Enrollment> _enrollmentDbSet;
         protected readonly DbSet<StudentLesson> _studentLessonDbSet;
 
 
 
-        public StudentRepository(StudentContext context)
+        public StudentRepository(StudentsContext context)
         {
             _context = context;
             _studentDbSet = _context.Set<Student>();

@@ -1,9 +1,11 @@
 ﻿using Brainwave.Core.Communication.Mediator;
 using Brainwave.Core.Data;
+using Brainwave.Core.DomainObjects;
 using Brainwave.Core.Messages;
 using Brainwave.ManagementPayment.Application;
 using Brainwave.ManagementPayment.Business;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Brainwave.ManagementPayment.Data
 {
@@ -56,6 +58,34 @@ namespace Brainwave.ManagementPayment.Data
             var isSuccess = await base.SaveChangesAsync() > 0;
             if (isSuccess) await _mediatorHandler.PublishEvents(this);
             return isSuccess;
+        }
+    }
+
+    public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
+    {
+        public void Configure(EntityTypeBuilder<Payment> builder)
+        {
+            builder.HasKey(p => p.Id);
+
+            builder.OwnsOne(p => p.CreditCard, cc =>
+            {
+                cc.Property(c => c.CardNumber)
+                  .HasColumnName("CardNumber")
+                  .IsRequired();
+
+                cc.Property(c => c.CardHolderName)
+                  .HasColumnName("CardHolderName")
+                  .IsRequired();
+
+                cc.Property(c => c.ExpirationDate)
+                  .HasColumnName("CardExpirationDate")
+                  .IsRequired();
+
+                cc.Property(c => c.SecurityCode)
+                  .HasColumnName("CardSecurityCode")
+                  .IsRequired();
+            });
+
         }
     }
 }

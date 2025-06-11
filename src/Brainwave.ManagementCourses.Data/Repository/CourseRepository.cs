@@ -6,12 +6,12 @@ namespace Brainwave.ManagementCourses.Data.Repository
 {
     public class CourseRepository : ICourseRepository
     {
-        private readonly CourseContext _context;
+        private readonly CoursesContext _context;
         protected readonly DbSet<Course> DbSet;
         protected readonly DbSet<Lesson> DbSetLesson;
 
 
-        public CourseRepository(CourseContext context)
+        public CourseRepository(CoursesContext context)
         {
             _context = context;
             DbSet = _context.Set<Course>();

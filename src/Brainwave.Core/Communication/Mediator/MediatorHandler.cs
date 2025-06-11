@@ -9,13 +9,12 @@ namespace Brainwave.Core.Communication.Mediator
     public class MediatorHandler : IMediatorHandler
     {
         private readonly IMediator _mediator;
-        private readonly IEventSourcingRepository _eventSourcingRepository;
+        //private readonly IEventSourcingRepository _eventSourcingRepository;
 
-        public MediatorHandler(IMediator mediator,
-                               IEventSourcingRepository eventSourcingRepository)
+        public MediatorHandler(IMediator mediator)
         {
             _mediator = mediator;
-            _eventSourcingRepository = eventSourcingRepository;
+       //     _eventSourcingRepository = eventSourcingRepository;
         }
 
         public async Task<bool> SendCommand<T>(T command) where T : Command
@@ -26,7 +25,7 @@ namespace Brainwave.Core.Communication.Mediator
         public async Task PublishEvent<T>(T @event) where T : Event
         {
             await _mediator.Publish(@event);
-            await _eventSourcingRepository.SaveEvent(@event);
+            //await _eventSourcingRepository.SaveEvent(@event);
         }
 
         public async Task PublishNotification<T>(T notification) where T : DomainNotification

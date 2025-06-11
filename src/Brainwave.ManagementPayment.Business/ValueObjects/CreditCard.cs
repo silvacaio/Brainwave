@@ -38,6 +38,11 @@
 
         public override int GetHashCode() =>
             HashCode.Combine(CardNumber, CardHolderName, ExpirationDate, SecurityCode);
+
+        internal bool IsValid()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

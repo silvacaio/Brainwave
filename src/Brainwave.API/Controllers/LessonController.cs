@@ -3,7 +3,6 @@ using Brainwave.API.ViewModel;
 using Brainwave.Core.Messages.CommonMessages.Notifications;
 using Brainwave.ManagementCourses.Application.Commands.Lesson;
 using Brainwave.ManagementCourses.Application.Queries;
-using Brainwave.ManagementCourses.Domain;
 using Brainwave.ManagementStudents.Application.Commands.StudentLesson;
 using Brainwave.ManagementStudents.Application.Queries;
 using MediatR;
@@ -13,6 +12,8 @@ using System.Net;
 
 namespace Brainwave.API.Controllers
 {
+    [Route("api/lessons")]
+
     public class LessonController : MainController
     {
         private readonly IMediator _mediator;
@@ -49,7 +50,7 @@ namespace Brainwave.API.Controllers
 
         [Authorize(Roles = "STUDENT")]
         public async Task<IActionResult> Finish([FromBody] FinishStudentLessonViewModel lessonvViewModel)
-        {         
+        {
             var lesson = await _courseQueries.GetLessonByCourseIdAndLessonId(lessonvViewModel.CourseId, lessonvViewModel.LessonId);
             if (lesson == null)
             {

@@ -3,15 +3,16 @@ using Brainwave.Core.Data;
 using Brainwave.Core.Messages;
 using Brainwave.ManagementStudents.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 
 namespace Brainwave.ManagementStudents.Data
 {
-    public class StudentContext : DbContext, IUnitOfWork
+    public class StudentsContext : DbContext, IUnitOfWork
     {
         private readonly IMediatorHandler _mediatorHandler;
 
-        public StudentContext(DbContextOptions<StudentContext> options, IMediatorHandler mediatorHandler)
+        public StudentsContext(DbContextOptions<StudentsContext> options, IMediatorHandler mediatorHandler)
             : base(options)
         {
             _mediatorHandler = mediatorHandler ?? throw new ArgumentNullException(nameof(mediatorHandler));
@@ -45,6 +46,10 @@ namespace Brainwave.ManagementStudents.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new StudentConfiguration());
+            modelBuilder.ApplyConfiguration(new EnrollmentConfiguration());
+            modelBuilder.ApplyConfiguration(new CertificateConfiguration());
+
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 foreach (var property in entityType.GetProperties().Where(p => p.ClrType == typeof(string)))
@@ -55,12 +60,47 @@ namespace Brainwave.ManagementStudents.Data
 
             modelBuilder.Ignore<Event>();
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(StudentContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(StudentsContext).Assembly);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
             base.OnModelCreating(modelBuilder);
+        }
+    }
+
+    public class StudentConfiguration : IEntityTypeConfiguration<Student>
+    {
+        public void Configure(EntityTypeBuilder<Student> builder)
+        {
+            builder.HasKey(a => a.Id);
+        }
+    }
+
+    public class CertificateConfiguration : IEntityTypeConfiguration<Certificate>
+    {
+        public void Configure(EntityTypeBuilder<Certificate> builder)
+        {
+            builder.HasKey(a => a.Id);
+
+            builder.HasOne(ct => ct.Student)
+                 .WithMany()
+                 .HasForeignKey(ct => ct.StudentId)
+                 .OnDelete(DeleteBehavior.Cascade);
+        }
+    }
+
+    public class EnrollmentConfiguration : IEntityTypeConfiguration<Enrollment>
+    {
+        public void Configure(EntityTypeBuilder<Enrollment> builder)
+        {
+            builder.HasKey(a => a.Id);
+
+            builder.HasOne(e => e.Student)
+            .WithMany(s => s.Enrollments)
+            .HasForeignKey(e => e.StudentId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

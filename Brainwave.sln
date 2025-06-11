@@ -37,7 +37,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementPayment
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{94B9BEBE-CA82-4547-8D5F-F2838E8F4693}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.API", "Brainwave.API\Brainwave.API.csproj", "{A92E48F9-9929-409B-AC8A-07BB5BAC2325}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.API", "src\Brainwave.API\Brainwave.API.csproj", "{A92E48F9-9929-409B-AC8A-07BB5BAC2325}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementPayment.Data", "src\Brainwave.ManagementPayment.Data\Brainwave.ManagementPayment.Data.csproj", "{D4E92417-07F3-4BC6-87C0-229C471F320A}"
 EndProject
