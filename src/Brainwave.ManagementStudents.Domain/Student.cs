@@ -24,11 +24,11 @@ namespace Brainwave.ManagementStudents.Domain
 
         public void AddEnrollment(Enrollment Enrollment)
         {
+            if (Enrollment == null)
+                throw new DomainException("Matrícula não pode ser nula.");
+
             if (EnrollmentExists(Enrollment))
                 throw new DomainException("Matrícula já existente.");
-
-            //TOOD : Verificar se o aluno já está matriculado no curso
-            //TODO:  Pagamento pendente
 
             _enrollments.Add(Enrollment);
         }

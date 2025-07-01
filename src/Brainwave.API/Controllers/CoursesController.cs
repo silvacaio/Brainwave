@@ -40,7 +40,7 @@ namespace Brainwave.API.Controllers
         }
 
         [Authorize(Roles = "STUDENT")]
-        [HttpGet]
+        [HttpGet("GetCoursesAvailableForEnrollment")]
         public async Task<ActionResult<IEnumerable<CourseViewModel>>> GetCoursesAvailableForEnrollment()
         {
             //TODO: como generalizar isso, caso eu tbm tivesse um MVC?
@@ -86,7 +86,7 @@ namespace Brainwave.API.Controllers
         }
 
         [Authorize(Roles = "STUDENT")]
-        [HttpPut("{id:guid}")]
+        [HttpPut("{id:guid}/finish")]
         public async Task<IActionResult> Finish(Guid id)
         {
             var course = await _courseQueries.GetById(id);

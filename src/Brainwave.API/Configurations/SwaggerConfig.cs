@@ -1,4 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace Brainwave.API.Configurations
 {
@@ -12,11 +13,15 @@ namespace Brainwave.API.Configurations
 
             builder.Services.AddSwaggerGen(s =>
             {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                s.IncludeXmlComments(xmlPath);
+
                 s.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "Brainwave",
-                    Description = "Pro Fi Swagger",
+                    Description = "Brainwave Swagger",
                     Contact = new OpenApiContact { Name = "Brainwave Team", Email = "admin@brainwave.com" },
                     License = new OpenApiLicense { Name = "MIT", Url = new Uri("https://github.com/silvacaio/Brainwave") }
                 });
@@ -55,10 +60,14 @@ namespace Brainwave.API.Configurations
         {
             if (app == null) throw new ArgumentNullException(nameof(app));
 
-            app.UseSwagger();
+            app.UseSwagger(c =>
+            {
+                c.SerializeAsV2 = true;
+            });
+
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProFin API v1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Brainwave API v1");
             });
 
             return app;

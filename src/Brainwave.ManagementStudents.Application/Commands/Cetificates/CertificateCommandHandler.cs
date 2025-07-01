@@ -1,8 +1,7 @@
-﻿using Brainwave.ManagementStudents.Application.Commands.Cetificates;
-using Brainwave.ManagementStudents.Domain;
+﻿using Brainwave.ManagementStudents.Domain;
 using MediatR;
 
-namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
+namespace Brainwave.ManagementStudents.Application.Commands.Cetificates
 {
     public class CertificateCommandHandler :
         IRequestHandler<CreateCertificateCommand, bool>

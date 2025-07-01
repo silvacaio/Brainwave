@@ -145,7 +145,7 @@ namespace Brainwave.API.Controllers
             return (result, result.Succeeded ? userIdentity.Id : Guid.Empty);
         }
 
-        public async Task<LoginResponseViewModel> GetJwt(string email)
+        private async Task<LoginResponseViewModel> GetJwt(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
 

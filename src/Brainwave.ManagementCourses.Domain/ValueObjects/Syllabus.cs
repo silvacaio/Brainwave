@@ -6,12 +6,6 @@ namespace Brainwave.ManagementCourses.Domain.ValueObjects
     {
         public Syllabus(string content, int durationInHours, string language)
         {
-            //TODO: dever esse trecho
-
-            //Validations.ValidateIfEmpty(content, "Content is required");
-            //Validations.ValidateIfLessThan(durationInHours, 1, "Duration in hours should be greater than 0"); ;
-            //Validations.ValidateIfEmpty(language, "Language is required");
-
             Content = content;
             DurationInHours = durationInHours;
             Language = language;

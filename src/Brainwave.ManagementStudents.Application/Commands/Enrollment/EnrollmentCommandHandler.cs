@@ -28,14 +28,14 @@ namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
             if (_commandValidator.Validate(request) == false)
                 return false;
 
-            var student = _studentRepository.GetById(request.StudentId);
+            var student = await _studentRepository.GetById(request.StudentId);
             if (student == null)
             {
                 await _mediator.Publish(new DomainNotification(request.MessageType, "Student not found."), cancellationToken);
                 return false;
             }
 
-            var existingEnrollment = _studentRepository.GetEnrollmentByCourseIdAndStudentId(request.CourseId, request.StudentId);
+            var existingEnrollment = await _studentRepository.GetEnrollmentByCourseIdAndStudentId(request.CourseId, request.StudentId);
             if (existingEnrollment != null)
             {
                 await _mediator.Publish(new DomainNotification(request.MessageType, "Enrollment already exists."), cancellationToken);

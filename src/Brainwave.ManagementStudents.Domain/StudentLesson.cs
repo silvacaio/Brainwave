@@ -12,7 +12,7 @@ namespace Brainwave.ManagementStudents.Domain
 
         public StudentLesson(Guid userId, Guid courseId, Guid lessonId)
         {
-            UserId = UserId;
+            UserId = userId;
             LessonId = lessonId;
             CourseId = courseId;
         }
@@ -21,7 +21,7 @@ namespace Brainwave.ManagementStudents.Domain
         {
             public static StudentLesson Create(Guid userId, Guid courseId, Guid lessonId)
             {
-                return new StudentLesson(userId, lessonId, lessonId);
+                return new StudentLesson(userId, courseId, lessonId);
             }
         }
     }

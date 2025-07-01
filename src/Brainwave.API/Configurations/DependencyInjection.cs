@@ -18,7 +18,6 @@ using Brainwave.ManagementStudents.Application.Commands.User;
 using Brainwave.ManagementStudents.Application.Queries;
 using Brainwave.ManagementStudents.Data.Repository;
 using Brainwave.ManagementStudents.Domain;
-using EventSourcing;
 using MediatR;
 
 

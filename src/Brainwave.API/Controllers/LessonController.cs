@@ -49,6 +49,8 @@ namespace Brainwave.API.Controllers
         }
 
         [Authorize(Roles = "STUDENT")]
+        [HttpPut("finish")]
+
         public async Task<IActionResult> Finish([FromBody] FinishStudentLessonViewModel lessonvViewModel)
         {
             var lesson = await _courseQueries.GetLessonByCourseIdAndLessonId(lessonvViewModel.CourseId, lessonvViewModel.LessonId);
