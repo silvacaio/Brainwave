@@ -34,6 +34,7 @@ namespace Brainwave.ManagementStudents.Application.Queries
         {
             return new EnrollmentViewModel
             {
+                EnrollmentId = enrollment.Id,
                 CourseId = enrollment.CourseId,
                 StudentId = enrollment.StudentId,
                 Status = enrollment.Status,

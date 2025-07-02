@@ -8,6 +8,7 @@ namespace Brainwave.ManagementStudents.Application.Queries.ViewModels
         public Guid CourseId { get; set; }
         public EnrollmentStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
+        public Guid EnrollmentId { get; set; }
     }
 
     public class CertificateViewModel
