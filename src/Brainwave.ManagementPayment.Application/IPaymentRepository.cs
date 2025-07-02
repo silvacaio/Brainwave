@@ -1,5 +1,5 @@
 ﻿using Brainwave.Core.Data;
-using Brainwave.ManagementPayment.Business;
+using Brainwave.ManagementPayment.Application;
 
 namespace Brainwave.ManagementPayment.Application
 {

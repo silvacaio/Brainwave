@@ -1,6 +1,6 @@
 ﻿
 
-namespace Brainwave.ManagementPayment.Business
+namespace Brainwave.ManagementPayment.Application
 {
     public enum PaymentStatus
     {

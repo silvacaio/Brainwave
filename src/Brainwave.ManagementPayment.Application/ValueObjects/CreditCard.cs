@@ -1,4 +1,4 @@
-﻿namespace Brainwave.ManagementPayment.Business.ValueObjects
+﻿namespace Brainwave.ManagementPayment.Application.ValueObjects
 {
     public class CreditCard : IEquatable<CreditCard>
     {
@@ -37,12 +37,7 @@
         }
 
         public override int GetHashCode() =>
-            HashCode.Combine(CardNumber, CardHolderName, ExpirationDate, SecurityCode);
-
-        internal bool IsValid()
-        {
-            throw new NotImplementedException();
-        }
+            HashCode.Combine(CardNumber, CardHolderName, ExpirationDate, SecurityCode);       
     }
 
 }

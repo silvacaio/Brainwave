@@ -1,6 +1,6 @@
 ﻿using Brainwave.Core.Data;
 using Brainwave.ManagementPayment.Application;
-using Brainwave.ManagementPayment.Business;
+using Brainwave.ManagementPayment.Application;
 
 namespace Brainwave.ManagementPayment.Data.Repository
 {

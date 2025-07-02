@@ -29,9 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementStudent
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payments", "Payments", "{ADC73D8D-C249-45C9-8B50-38905172E987}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementPayment.Domain", "src\Brainwave.ManagementPayment.Domain\Brainwave.ManagementPayment.Domain.csproj", "{527E4E96-618C-4B36-A719-7D6F6C7E55B6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementPayment.Application", "src\Brainwave.ManagementPayment.Business\Brainwave.ManagementPayment.Application.csproj", "{0A5BE3C7-D1DB-4D73-B281-45087F2ADDB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementPayment.Application", "src\Brainwave.ManagementPayment.Application\Brainwave.ManagementPayment.Application.csproj", "{0A5BE3C7-D1DB-4D73-B281-45087F2ADDB1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{94B9BEBE-CA82-4547-8D5F-F2838E8F4693}"
 EndProject
@@ -50,6 +48,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementStudents.Application.Tests", "tests\Brainwave.ManagementStudents.Application.Tests\Brainwave.ManagementStudents.Application.Tests.csproj", "{63E1954C-D2C6-4898-A41E-E6219DEEE7C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementCourses.Application.Tests", "tests\Brainwave.ManagementCourses.Application.Tests\Brainwave.ManagementCourses.Application.Tests.csproj", "{D555C931-E571-4037-A124-C71103B12C36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementPayment.Application.Tests", "tests\Brainwave.ManagementPayment.Application.Tests\Brainwave.ManagementPayment.Application.Tests.csproj", "{A86DE378-E91E-426A-A5EA-486CEFF8209F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementPayment.AntiCorruption.Tests", "tests\Brainwave.ManagementPayment.AntiCorruption.Tests\Brainwave.ManagementPayment.AntiCorruption.Tests.csproj", "{8F6A61DB-71D5-4A02-83F1-8FEA384EE19F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,10 +87,6 @@ Global
 		{A02BC07B-889E-4273-8AA6-D0B5EC0B4046}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A02BC07B-889E-4273-8AA6-D0B5EC0B4046}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A02BC07B-889E-4273-8AA6-D0B5EC0B4046}.Release|Any CPU.Build.0 = Release|Any CPU
-		{527E4E96-618C-4B36-A719-7D6F6C7E55B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{527E4E96-618C-4B36-A719-7D6F6C7E55B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{527E4E96-618C-4B36-A719-7D6F6C7E55B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{527E4E96-618C-4B36-A719-7D6F6C7E55B6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0A5BE3C7-D1DB-4D73-B281-45087F2ADDB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A5BE3C7-D1DB-4D73-B281-45087F2ADDB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A5BE3C7-D1DB-4D73-B281-45087F2ADDB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -121,6 +119,14 @@ Global
 		{D555C931-E571-4037-A124-C71103B12C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D555C931-E571-4037-A124-C71103B12C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D555C931-E571-4037-A124-C71103B12C36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A86DE378-E91E-426A-A5EA-486CEFF8209F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A86DE378-E91E-426A-A5EA-486CEFF8209F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A86DE378-E91E-426A-A5EA-486CEFF8209F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A86DE378-E91E-426A-A5EA-486CEFF8209F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F6A61DB-71D5-4A02-83F1-8FEA384EE19F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F6A61DB-71D5-4A02-83F1-8FEA384EE19F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F6A61DB-71D5-4A02-83F1-8FEA384EE19F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F6A61DB-71D5-4A02-83F1-8FEA384EE19F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,7 +143,6 @@ Global
 		{2F5C82C7-D7A5-49E1-B33A-90D7743221A3} = {6DB20123-6409-4AB9-BC34-BD6E36992092}
 		{A02BC07B-889E-4273-8AA6-D0B5EC0B4046} = {6DB20123-6409-4AB9-BC34-BD6E36992092}
 		{ADC73D8D-C249-45C9-8B50-38905172E987} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{527E4E96-618C-4B36-A719-7D6F6C7E55B6} = {ADC73D8D-C249-45C9-8B50-38905172E987}
 		{0A5BE3C7-D1DB-4D73-B281-45087F2ADDB1} = {ADC73D8D-C249-45C9-8B50-38905172E987}
 		{A92E48F9-9929-409B-AC8A-07BB5BAC2325} = {94B9BEBE-CA82-4547-8D5F-F2838E8F4693}
 		{D4E92417-07F3-4BC6-87C0-229C471F320A} = {ADC73D8D-C249-45C9-8B50-38905172E987}
@@ -146,6 +151,8 @@ Global
 		{BED2C2A7-AD5E-4D25-9D52-FEC460825BD0} = {C5CEA0B4-08FB-40DC-A986-E890F9C8D486}
 		{63E1954C-D2C6-4898-A41E-E6219DEEE7C0} = {C5CEA0B4-08FB-40DC-A986-E890F9C8D486}
 		{D555C931-E571-4037-A124-C71103B12C36} = {C5CEA0B4-08FB-40DC-A986-E890F9C8D486}
+		{A86DE378-E91E-426A-A5EA-486CEFF8209F} = {C5CEA0B4-08FB-40DC-A986-E890F9C8D486}
+		{8F6A61DB-71D5-4A02-83F1-8FEA384EE19F} = {C5CEA0B4-08FB-40DC-A986-E890F9C8D486}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D32D4802-6B63-467E-BB50-77607290FDA4}

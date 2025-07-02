@@ -1,5 +1,4 @@
 ﻿using Brainwave.ManagementPayment.Application;
-using Brainwave.ManagementPayment.Business;
 using static Brainwave.ManagementPayment.Application.PaymentTransaction;
 
 namespace Brainwave.ManagementPayment.AntiCorruption

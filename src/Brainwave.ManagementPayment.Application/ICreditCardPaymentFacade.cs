@@ -1,6 +1,6 @@
 ﻿using Brainwave.ManagementPayment.Application;
 
-namespace Brainwave.ManagementPayment.Business
+namespace Brainwave.ManagementPayment.Application
 {
     public interface ICreditCardPaymentFacade
     {

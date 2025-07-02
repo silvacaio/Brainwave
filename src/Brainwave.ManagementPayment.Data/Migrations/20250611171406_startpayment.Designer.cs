@@ -49,7 +49,7 @@ namespace Brainwave.ManagementPayment.Data.Migrations
                     b.ToTable("PaymentTransactions");
                 });
 
-            modelBuilder.Entity("Brainwave.ManagementPayment.Business.Payment", b =>
+            modelBuilder.Entity("Brainwave.ManagementPayment.Application.Payment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -71,7 +71,7 @@ namespace Brainwave.ManagementPayment.Data.Migrations
 
             modelBuilder.Entity("Brainwave.ManagementPayment.Application.PaymentTransaction", b =>
                 {
-                    b.HasOne("Brainwave.ManagementPayment.Business.Payment", "Payment")
+                    b.HasOne("Brainwave.ManagementPayment.Application.Payment", "Payment")
                         .WithOne("Transaction")
                         .HasForeignKey("Brainwave.ManagementPayment.Application.PaymentTransaction", "PaymentId")
                         .IsRequired();
@@ -79,9 +79,9 @@ namespace Brainwave.ManagementPayment.Data.Migrations
                     b.Navigation("Payment");
                 });
 
-            modelBuilder.Entity("Brainwave.ManagementPayment.Business.Payment", b =>
+            modelBuilder.Entity("Brainwave.ManagementPayment.Application.Payment", b =>
                 {
-                    b.OwnsOne("Brainwave.ManagementPayment.Business.ValueObjects.CreditCard", "CreditCard", b1 =>
+                    b.OwnsOne("Brainwave.ManagementPayment.Application.ValueObjects.CreditCard", "CreditCard", b1 =>
                         {
                             b1.Property<Guid>("PaymentId")
                                 .HasColumnType("TEXT");
@@ -117,7 +117,7 @@ namespace Brainwave.ManagementPayment.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Brainwave.ManagementPayment.Business.Payment", b =>
+            modelBuilder.Entity("Brainwave.ManagementPayment.Application.Payment", b =>
                 {
                     b.Navigation("Transaction")
                         .IsRequired();

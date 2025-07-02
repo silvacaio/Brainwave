@@ -30,6 +30,7 @@
 		<ProjectReference Include="..\Brainwave.ManagementCourses.Application\Brainwave.ManagementCourses.Application.csproj" />
 		<ProjectReference Include="..\Brainwave.ManagementCourses.Data\Brainwave.ManagementCourses.Data.csproj" />
 		<ProjectReference Include="..\Brainwave.ManagementPayment.AntiCorruption\Brainwave.ManagementPayment.AntiCorruption.csproj" />
+		<ProjectReference Include="..\Brainwave.ManagementPayment.Application\Brainwave.ManagementPayment.Application.csproj" />
 		<ProjectReference Include="..\Brainwave.ManagementPayment.Data\Brainwave.ManagementPayment.Data.csproj" />
 		<ProjectReference Include="..\Brainwave.ManagementStudents.Application\Brainwave.ManagementStudents.Application.csproj" />
 		<ProjectReference Include="..\Brainwave.ManagementStudents.Data\Brainwave.ManagementStudents.Data.csproj" />

@@ -2,8 +2,8 @@
 using Brainwave.Core.Messages.CommonMessages.Notifications;
 using Brainwave.Core.Messages.IntegrationEvents;
 using Brainwave.ManagementPayment.Application.Commands;
-using Brainwave.ManagementPayment.Business;
-using Brainwave.ManagementPayment.Business.ValueObjects;
+using Brainwave.ManagementPayment.Application;
+using Brainwave.ManagementPayment.Application.ValueObjects;
 using MediatR;
 
 namespace Brainwave.ManagementPayment.Application.Commands

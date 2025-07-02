@@ -1,8 +1,8 @@
 ﻿using Brainwave.Core.DomainObjects;
 using Brainwave.ManagementPayment.Application;
-using Brainwave.ManagementPayment.Business.ValueObjects;
+using Brainwave.ManagementPayment.Application.ValueObjects;
 
-namespace Brainwave.ManagementPayment.Business
+namespace Brainwave.ManagementPayment.Application
 {
     public class Payment : Entity, IAggregateRoot
     {
@@ -14,7 +14,7 @@ namespace Brainwave.ManagementPayment.Business
 
         public void AddCreditCard(CreditCard creditCard)
         {
-            if (creditCard == null || !creditCard.IsValid()) return;
+            if (creditCard == null) return;
             CreditCard = creditCard;
         }
 

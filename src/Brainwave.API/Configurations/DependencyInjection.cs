@@ -10,7 +10,7 @@ using Brainwave.ManagementCourses.Domain;
 using Brainwave.ManagementPayment.AntiCorruption;
 using Brainwave.ManagementPayment.Application;
 using Brainwave.ManagementPayment.Application.Commands;
-using Brainwave.ManagementPayment.Business;
+using Brainwave.ManagementPayment.Application;
 using Brainwave.ManagementPayment.Data.Repository;
 using Brainwave.ManagementStudents.Application.Commands.Enrollment;
 using Brainwave.ManagementStudents.Application.Commands.StudentLesson;

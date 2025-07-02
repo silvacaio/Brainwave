@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Brainwave.ManagementPayment.Business\Brainwave.ManagementPayment.Application.csproj" />
+    <ProjectReference Include="..\Brainwave.ManagementPayment.Application\Brainwave.ManagementPayment.Application.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@ using Brainwave.Core.Data;
 using Brainwave.Core.DomainObjects;
 using Brainwave.Core.Messages;
 using Brainwave.ManagementPayment.Application;
-using Brainwave.ManagementPayment.Business;
+using Brainwave.ManagementPayment.Application;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
