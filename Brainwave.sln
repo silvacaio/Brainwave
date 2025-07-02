@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementCourses
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementStudents.Application.Tests", "tests\Brainwave.ManagementStudents.Application.Tests\Brainwave.ManagementStudents.Application.Tests.csproj", "{63E1954C-D2C6-4898-A41E-E6219DEEE7C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementCourses.Application.Tests", "tests\Brainwave.ManagementCourses.Application.Tests\Brainwave.ManagementCourses.Application.Tests.csproj", "{D555C931-E571-4037-A124-C71103B12C36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,10 @@ Global
 		{63E1954C-D2C6-4898-A41E-E6219DEEE7C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63E1954C-D2C6-4898-A41E-E6219DEEE7C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63E1954C-D2C6-4898-A41E-E6219DEEE7C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D555C931-E571-4037-A124-C71103B12C36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D555C931-E571-4037-A124-C71103B12C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D555C931-E571-4037-A124-C71103B12C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D555C931-E571-4037-A124-C71103B12C36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,6 +145,7 @@ Global
 		{814B99B2-338F-4915-85B5-55983D59656D} = {C5CEA0B4-08FB-40DC-A986-E890F9C8D486}
 		{BED2C2A7-AD5E-4D25-9D52-FEC460825BD0} = {C5CEA0B4-08FB-40DC-A986-E890F9C8D486}
 		{63E1954C-D2C6-4898-A41E-E6219DEEE7C0} = {C5CEA0B4-08FB-40DC-A986-E890F9C8D486}
+		{D555C931-E571-4037-A124-C71103B12C36} = {C5CEA0B4-08FB-40DC-A986-E890F9C8D486}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D32D4802-6B63-467E-BB50-77607290FDA4}
