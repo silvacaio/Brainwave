@@ -11,7 +11,7 @@ namespace Brainwave.ManagementCourses.Domain
             Syllabus = syllabus;
             _lessons = new List<Lesson>();
             Value = value;
-            //TODO: validação
+            Validate();
         }
 
         protected Course()
@@ -34,19 +34,15 @@ namespace Brainwave.ManagementCourses.Domain
 
         public void AddLesson(Lesson item)
         {
-            if (!item.IsValid()) return;
-
             item.AssociateCourse(Id);
 
             _lessons.Add(item);
         }
 
-        public override bool IsValid()
+        public void Validate()
         {
-            //TODO: rever esse codigo
-            return string.IsNullOrWhiteSpace(Title) == false;
-            //   Syllabus.Validate();
-
+            Syllabus.Validate();
+            Validations.ValidateIfEmpty(Title, "Title is required");
         }
 
 

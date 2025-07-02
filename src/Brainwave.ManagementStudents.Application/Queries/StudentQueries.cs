@@ -12,11 +12,6 @@ namespace Brainwave.ManagementStudents.Application.Queries
             _studentRepository = studentRepository;
         }
 
-        public Task<CertificateViewModel?> GetCertificate(Guid certificateId, Guid studentId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<EnrollmentViewModel?> GetEnrollment(Guid courseId, Guid studentId)
         {
             var enrollment = await _studentRepository.GetEnrollmentByCourseIdAndStudentId(courseId, studentId);
@@ -39,6 +34,7 @@ namespace Brainwave.ManagementStudents.Application.Queries
         {
             return new EnrollmentViewModel
             {
+                EnrollmentId = enrollment.Id,
                 CourseId = enrollment.CourseId,
                 StudentId = enrollment.StudentId,
                 Status = enrollment.Status,
@@ -83,6 +79,36 @@ namespace Brainwave.ManagementStudents.Application.Queries
                 LessonId = studentLesson.LessonId
             };
         }
+
+        public async Task<IEnumerable<CertificateViewModel>> GetStudentCertificates(Guid studentId)
+        {
+            var certificates = await _studentRepository.GetStudentCertificates(studentId);
+            if (certificates == null)
+                return Enumerable.Empty<CertificateViewModel>();
+
+            return certificates.Select(CreateCertificateViewModel).ToList();
+        }
+
+        public async Task<CertificateViewModel?> GetCertificate(Guid studentId, Guid enrollmmentId)
+        {
+            var certificate = await _studentRepository.GetCertificate(studentId, enrollmmentId);
+            if (certificate == null)
+                return null;
+
+            return CreateCertificateViewModel(certificate);
+        }
+
+
+        public static CertificateViewModel CreateCertificateViewModel(Certificate certificate)
+        {
+            return new CertificateViewModel
+            {
+                File = certificate.GetDescription(),
+                StudentId = certificate.StudentId,
+                EnrollmentId = certificate.EnrollmentId
+            };
+        }
+
     }
 }
 

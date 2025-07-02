@@ -71,7 +71,7 @@ namespace Brainwave.Core.DomainObjects
 
         public virtual bool IsValid()
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 

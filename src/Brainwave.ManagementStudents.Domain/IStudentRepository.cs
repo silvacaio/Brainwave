@@ -19,5 +19,7 @@ namespace Brainwave.ManagementStudents.Domain
         Task<StudentLesson?> GetLessonByStudentIdAndCourseIdAndLessonId(Guid studentId, Guid courseId, Guid lessonId);
         Task Add(StudentLesson newLesson);
         Task<IEnumerable<StudentLesson>> GetStudentLessonsByCourseId(Guid userId, Guid courseId);
+        Task<IEnumerable<Certificate>> GetStudentCertificates(Guid studentId);
+        Task<Certificate?> GetCertificate(Guid studentId, Guid enrollmentId);
     }
 }

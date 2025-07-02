@@ -4,16 +4,16 @@ namespace Brainwave.ManagementCourses.Application.Events
 {
     public class LessonAddedEvent : Event
     {
-        private Guid Id { get; set; }
-        private string Title { get; set; }
-        private Guid CourseId { get; set; }
+        public Guid Id { get; set; }
+        public string Title { get; set; }
+        public Guid CourseId { get; set; }
 
         public LessonAddedEvent(Guid id, string title, Guid courseId)
         {
             AggregateId = courseId;
-            this.Id = id;
-            this.Title = title;
-            this.CourseId = courseId;
+            Id = id;
+            Title = title;
+            CourseId = courseId;
         }
     }
 }

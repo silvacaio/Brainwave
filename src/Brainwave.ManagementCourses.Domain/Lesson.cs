@@ -1,15 +1,17 @@
 ﻿using Brainwave.Core.DomainObjects;
-using Brainwave.Core.Messages;
 
 namespace Brainwave.ManagementCourses.Domain
 {
     public class Lesson : Entity
     {
-        public Lesson(Guid courseId, string title, string content, string material)
+        public Lesson(Guid courseId, string title, string content, string? material)
         {
+            CourseId = courseId;
             Title = title;
             Content = content;
             Material = material;
+
+            Validate();
         }
 
         public string Title { get; private set; }
@@ -21,16 +23,16 @@ namespace Brainwave.ManagementCourses.Domain
         // EF Rel.
         public Course Course { get; set; }
 
-        internal void AssociateCourse(Guid courseId)
+        public void AssociateCourse(Guid courseId)
         {
             CourseId = courseId;
         }
 
-        public override bool IsValid()
+        private void Validate()
         {
-            return string.IsNullOrWhiteSpace(Title) == false &&
-                   string.IsNullOrWhiteSpace(Content) == false;
-        }
+            Validations.ValidateIfEmpty(Title, "Title is required");
+            Validations.ValidateIfEmpty(Content, "Content is required");
+        }  
 
         public static class LessonFactory
         {

@@ -13,7 +13,7 @@ namespace Brainwave.ManagementCourses.Application.Commands.Course
             SyllabusDurationInHours = syllabusDurationInHours;
             SyllabusLanguage = syllabusLanguage;
             UserId = userId;
-            value = Value;
+            Value = value;
         }
 
         public string Title { get; private set; }

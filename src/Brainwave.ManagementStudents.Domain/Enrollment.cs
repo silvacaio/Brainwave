@@ -8,7 +8,10 @@ namespace Brainwave.ManagementStudents.Domain
         public Guid CourseId { get; private set; }
         public EnrollmentStatus Status { get; private set; }
 
-        public Enrollment(Guid studentId, Guid courseId, DateTime registrationTime)
+        public Student Student { get; set; }
+
+
+        public Enrollment(Guid studentId, Guid courseId)
         {
             StudentId = studentId;
             CourseId = courseId;
@@ -29,7 +32,7 @@ namespace Brainwave.ManagementStudents.Domain
         {
             public static Enrollment Create(Guid studentId, Guid courseId)
             {
-                var enrollment = new Enrollment(studentId, courseId, DateTime.Now);
+                var enrollment = new Enrollment(studentId, courseId);
                 enrollment.Status = EnrollmentStatus.PendingPayment;
                 return enrollment;
             }
@@ -39,7 +42,7 @@ namespace Brainwave.ManagementStudents.Domain
         {
             public static Enrollment Create(Guid studentId, Guid courseId)
             {
-                var enrollment = new Enrollment(studentId, courseId, DateTime.Now);
+                var enrollment = new Enrollment(studentId, courseId);
                 enrollment.Status = EnrollmentStatus.Active;
                 return enrollment;
             }
@@ -49,7 +52,7 @@ namespace Brainwave.ManagementStudents.Domain
         {
             public static Enrollment Create(Guid studentId, Guid courseId)
             {
-                var enrollment = new Enrollment(studentId, courseId, DateTime.Now);
+                var enrollment = new Enrollment(studentId, courseId);
                 enrollment.Status = EnrollmentStatus.Done;
                 return enrollment;
             }
@@ -59,7 +62,7 @@ namespace Brainwave.ManagementStudents.Domain
         {
             public static Enrollment Create(Guid studentId, Guid courseId)
             {
-                var enrollment = new Enrollment(studentId, courseId, DateTime.Now);
+                var enrollment = new Enrollment(studentId, courseId);
                 enrollment.Status = EnrollmentStatus.Blocked;
                 return enrollment;
             }

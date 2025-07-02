@@ -35,7 +35,7 @@ namespace Brainwave.ManagementStudents.Application.Commands.StudentLesson
             if (_commandValidator.Validate(request) == false)
                 return false;
 
-            var student = _studentRepository.GetById(request.StudentId);
+            var student = await _studentRepository.GetById(request.StudentId);
             if (student == null)
             {
                 await _mediator.Publish(new DomainNotification(request.MessageType, "Student not found."), cancellationToken);
@@ -61,7 +61,7 @@ namespace Brainwave.ManagementStudents.Application.Commands.StudentLesson
                 return false;
             }
 
-            var lesson = _studentRepository.GetLessonByStudentIdAndCourseIdAndLessonId(request.StudentId, request.CourseId, request.LessonId);
+            var lesson = await _studentRepository.GetLessonByStudentIdAndCourseIdAndLessonId(request.StudentId, request.CourseId, request.LessonId);
             if (lesson != null)
             {
                 await _mediator.Publish(new DomainNotification(request.MessageType, "Student already finish this Lesson."), cancellationToken);

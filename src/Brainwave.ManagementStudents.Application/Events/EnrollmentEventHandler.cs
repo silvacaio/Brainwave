@@ -11,7 +11,6 @@ namespace Brainwave.ManagementStudents.Application.Events
             INotificationHandler<EnrollmentFinishedEvent>
 
     {
-
         private readonly IMediatorHandler _mediatorHandler;
 
         public EnrollmentEventHandler(IMediatorHandler mediatorHandler)
