@@ -10,7 +10,7 @@ namespace Brainwave.ManagementStudents.Data.Repository
         protected readonly DbSet<Student> _studentDbSet;
         protected readonly DbSet<Enrollment> _enrollmentDbSet;
         protected readonly DbSet<StudentLesson> _studentLessonDbSet;
-
+        protected readonly DbSet<Certificate> _certificationDbSet;
 
 
         public StudentRepository(StudentsContext context)
@@ -19,9 +19,11 @@ namespace Brainwave.ManagementStudents.Data.Repository
             _studentDbSet = _context.Set<Student>();
             _enrollmentDbSet = _context.Set<Enrollment>();
             _studentLessonDbSet = _context.Set<StudentLesson>();
-            _studentDbSet.AsTracking();
-            _enrollmentDbSet.AsTracking();
-            _studentLessonDbSet.AsTracking();
+            _certificationDbSet = _context.Set<Certificate>();
+            _studentDbSet.AsNoTracking(); 
+            _enrollmentDbSet.AsNoTracking();
+            _studentLessonDbSet.AsNoTracking();
+            _certificationDbSet.AsNoTracking();
         }
 
         public IUnitOfWork UnitOfWork => _context;
@@ -94,6 +96,16 @@ namespace Brainwave.ManagementStudents.Data.Repository
         public async Task<IEnumerable<StudentLesson>> GetStudentLessonsByCourseId(Guid userId, Guid courseId)
         {
             return await _studentLessonDbSet.Where(s => s.UserId == userId && s.CourseId == courseId).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Certificate>> GetStudentCertificates(Guid studentId)
+        {
+            return await _certificationDbSet.Where(s => s.StudentId == studentId).ToListAsync();
+        }
+
+        public async Task<Certificate?> GetCertificate(Guid studentId, Guid enrollmentId)
+        {
+            return await _certificationDbSet.FirstOrDefaultAsync(s => s.StudentId == studentId && s.EnrollmentId == enrollmentId);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Brainwave.ManagementStudents.Domain
             Validate();
         }
 
-        private string GetDescription()
+        public string GetDescription()
         {
             return $"We hereby certify that student {StudentName} successfully completed the course {CourseName} on {CreatedAt:dd/MM/yyyy}.";
         }

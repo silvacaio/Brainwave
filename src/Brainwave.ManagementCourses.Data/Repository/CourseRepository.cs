@@ -17,8 +17,8 @@ namespace Brainwave.ManagementCourses.Data.Repository
             DbSet = _context.Set<Course>();
             DbSetLesson = _context.Set<Lesson>();
 
-            DbSet.AsTracking();
-            DbSetLesson.AsTracking();
+            DbSet.AsNoTracking();
+            DbSetLesson.AsNoTracking();
 
         }
 
