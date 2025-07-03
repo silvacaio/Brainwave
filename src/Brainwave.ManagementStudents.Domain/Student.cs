@@ -9,6 +9,11 @@ namespace Brainwave.ManagementStudents.Domain
 
         private readonly List<Enrollment> _enrollments = [];
 
+        private readonly List<StudentLesson> _studentLesson = [];
+
+        private readonly List<Certificate> _certificates = [];
+        
+
         public Student(Guid id, string name, bool isAdmin)
         {
             Id = id;
@@ -20,7 +25,12 @@ namespace Brainwave.ManagementStudents.Domain
 
         }
 
+        public IReadOnlyCollection<Certificate> Certificates => _certificates;
+
+
         public IReadOnlyCollection<Enrollment> Enrollments => _enrollments;
+
+        public IReadOnlyCollection<StudentLesson> StudentLesson => _studentLesson;
 
         public void AddEnrollment(Enrollment Enrollment)
         {

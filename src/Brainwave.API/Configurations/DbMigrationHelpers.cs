@@ -1,11 +1,17 @@
 ﻿using Brainwave.API.Data;
 using Brainwave.ManagementCourses.Data;
 using Brainwave.ManagementCourses.Domain;
+using Brainwave.ManagementCourses.Domain.ValueObjects;
+using Brainwave.ManagementPayment.Application;
+using Brainwave.ManagementPayment.Application.ValueObjects;
 using Brainwave.ManagementPayment.Data;
 using Brainwave.ManagementStudents.Data;
 using Brainwave.ManagementStudents.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.Intrinsics.X86;
+using System.Transactions;
+using static Brainwave.ManagementStudents.Domain.Enrollment;
 
 namespace Brainwave.API.Configurations
 {
@@ -31,7 +37,7 @@ namespace Brainwave.API.Configurations
             var paymentContext = scope.ServiceProvider.GetRequiredService<PaymentContext>();
             var env = scope.ServiceProvider.GetRequiredService<IHostEnvironment>();
 
-            if (env.IsDevelopment() || env.IsEnvironment("Dev"))
+            if (env.IsDevelopment() || env.IsEnvironment("Testing"))
             {
                 await studentContext.Database.EnsureDeletedAsync();
                 await courseContext.Database.EnsureDeletedAsync();
@@ -43,14 +49,14 @@ namespace Brainwave.API.Configurations
                 await contextIdentity.Database.MigrateAsync();
                 await paymentContext.Database.MigrateAsync();
 
-                await SeedUsersAndRoles(studentContext, contextIdentity);
+                await SeedUsersAndRoles(contextIdentity);
                 await SeedDataInitial(studentContext, courseContext, contextIdentity, paymentContext);
             }
         }
 
-        private static async Task SeedUsersAndRoles(StudentsContext context, ApplicationContext contextIdentity)
+        private static async Task SeedUsersAndRoles(ApplicationContext contextIdentity)
         {
-            if (context.Students.Any()) return;
+            if (contextIdentity.Users.Any()) return;
 
             #region ADMIN SEED
             var ADMIN_ROLE_ID = Guid.NewGuid();
@@ -89,8 +95,6 @@ namespace Brainwave.API.Configurations
             adminUser.PasswordHash = ph.HashPassword(adminUser, "Teste@123");
             await contextIdentity.Users.AddAsync(adminUser);
 
-            var user = Student.StudentFactory.CreateAdmin(adminUser.Id, adminUser.UserName);
-            await context.Students.AddAsync(user);
 
             await contextIdentity.UserRoles.AddAsync(new IdentityUserRole<Guid>
             {
@@ -98,7 +102,6 @@ namespace Brainwave.API.Configurations
                 UserId = ADMIN_ID
             });
 
-            context.SaveChanges();
             #endregion
 
             #region NON-ADMIN USERS SEED
@@ -106,29 +109,28 @@ namespace Brainwave.API.Configurations
             var user1 = new IdentityUser<Guid>
             {
                 Id = user1Id,
-                Email = "user1@brainwave.com",
+                Email = "aluno1@brainwave.com",
                 EmailConfirmed = true,
-                UserName = "user1@brainwave.com",
-                NormalizedUserName = "user1@brainwave.com".ToUpper(),
-                NormalizedEmail = "user1@brainwave.com".ToUpper(),
+                UserName = "aluno1@brainwave.com",
+                NormalizedUserName = "aluno1@brainwave.com".ToUpper(),
+                NormalizedEmail = "aluno1@brainwave.com".ToUpper(),
                 LockoutEnabled = true,
                 SecurityStamp = user1Id.ToString(),
             };
             user1.PasswordHash = ph.HashPassword(user1, "Teste@123");
             await contextIdentity.Users.AddAsync(user1);
 
-            var systemUser1 = Student.StudentFactory.CreateStudent(user1.Id, user1.UserName);
-            await context.Students.AddAsync(systemUser1);
+
 
             var user2Id = Guid.NewGuid();
             var user2 = new IdentityUser<Guid>
             {
                 Id = user2Id,
-                Email = "user2@brainwave.com",
+                Email = "aluno2@brainwave.com",
                 EmailConfirmed = true,
-                UserName = "user2@brainwave.com",
-                NormalizedUserName = "user2@brainwave.com".ToUpper(),
-                NormalizedEmail = "user2@brainwave.com".ToUpper(),
+                UserName = "aluno2@brainwave.com",
+                NormalizedUserName = "aluno2@brainwave.com".ToUpper(),
+                NormalizedEmail = "aluno2@brainwave.com".ToUpper(),
                 LockoutEnabled = true,
                 SecurityStamp = user2Id.ToString(),
             };
@@ -147,11 +149,8 @@ namespace Brainwave.API.Configurations
                 UserId = user2Id
             });
 
+            await contextIdentity.SaveChangesAsync();
 
-            var systemUser2 = Student.StudentFactory.CreateStudent(user2.Id, user2.UserName);
-            await context.Students.AddAsync(systemUser2);
-
-            context.SaveChanges();
             #endregion
         }
 
@@ -163,8 +162,78 @@ namespace Brainwave.API.Configurations
             if (courseContext.Set<Course>().Any() || courseContext.Set<Lesson>().Any())
                 return;
 
-            var user = await dbApplicationContext.Users.FirstOrDefaultAsync(x => x.Email == "aluno@teste.com");
-            var userAdmin = await dbApplicationContext.Users.FirstOrDefaultAsync(x => x.Email == "admin@teste.com");
+            var userStudent = await dbApplicationContext.Users.FirstOrDefaultAsync(x => x.Email == "aluno1@brainwave.com");
+            var userStudent2 = await dbApplicationContext.Users.FirstOrDefaultAsync(x => x.Email == "aluno2@brainwave.com");
+            var userAdmin = await dbApplicationContext.Users.FirstOrDefaultAsync(x => x.Email == "admin@brainwave.com");
+
+            var admin = Student.StudentFactory.CreateAdmin(userAdmin.Id, userAdmin.UserName);
+            var student = Student.StudentFactory.CreateStudent(userStudent.Id, userStudent.UserName);
+            var student2 = Student.StudentFactory.CreateStudent(userStudent2.Id, userStudent2.UserName);
+
+
+            var course = Course.CourseFactory.New(".NET", 100, new Syllabus("Test content", 30, "English"));
+            var lesson1 = Lesson.LessonFactory.New(course.Id, "Lesson 1", "Test", "pdf");
+            var lesson2 = Lesson.LessonFactory.New(course.Id, "Lesson 2", "Test", "ADB");
+            var lesson3 = Lesson.LessonFactory.New(course.Id, "Lesson 3", "Test", "SDASDASDASDASDAD");
+            course.AddLesson(lesson1);
+            course.AddLesson(lesson2);
+            course.AddLesson(lesson3);
+
+            var course2 = Course.CourseFactory.New("Unit Tests", 50, new Syllabus("Test content", 10, "English"));
+            var lesson4 = Lesson.LessonFactory.New(course.Id, "Lesson 4", "Test", "pdf");
+            var lesson5 = Lesson.LessonFactory.New(course.Id, "Lesson 5", "Test", "ADB");
+            var lesson6 = Lesson.LessonFactory.New(course.Id, "Lesson 6", "Test", "SDASDASDASDASDAD");
+            course2.AddLesson(lesson4);
+            course2.AddLesson(lesson5);
+            course2.AddLesson(lesson6);
+
+
+            // Enrollment
+            var enrollmentDone = EnrollmentDone.Create(student.Id, course.Id);
+
+            var enrollmentPendingPayment = EnrollmentPendingPayment.Create(student2.Id, course.Id);
+
+            var enrollmentActive = EnrollmentActive.Create(student2.Id, course2.Id);
+
+            //StudentLesson 1
+
+            var studentLesson1 = StudentLesson.StudentLessonFactory.Create(student.Id, lesson1.CourseId, lesson1.Id);
+            var studentLesson2 = StudentLesson.StudentLessonFactory.Create(student.Id, lesson2.CourseId, lesson2.Id);
+            var studentLesson3 = StudentLesson.StudentLessonFactory.Create(student.Id, lesson3.CourseId, lesson3.Id);
+
+            // StudentLesson 2
+            var studentLesson4 = StudentLesson.StudentLessonFactory.Create(student2.Id, lesson4.CourseId, lesson4.Id);
+
+            //Certificate
+            var certificate = Certificate.CertificateFactory.Create(student.Name, course.Title, enrollmentDone.Id, student.Id);
+
+            // Payment
+            var creditCard = CreditCard.CreditCardFactory.Create("11111111", "New credit card", DateTime.Today.AddYears(1), "123");
+            var payment = Payment.PaymentFactory.Create(enrollmentDone.Id, course.Value);
+            payment.AddCreditCard(creditCard);
+
+            //PaymentTransaction
+            var paymentTransaction = PaymentTransaction.PaymentTransactionFactory.Paid(enrollmentDone.Id, payment.Id, course.Value);
+
+            await courseContext.Courses.AddRangeAsync(course, course2);
+
+            await courseContext.Lessons.AddRangeAsync(lesson1, lesson2, lesson3, lesson4, lesson5, lesson6);
+
+            await studentContext.Students.AddRangeAsync(admin, student, student2);
+
+            await studentContext.Enrollments.AddRangeAsync(enrollmentDone, enrollmentPendingPayment, enrollmentActive);
+
+            await studentContext.StudentLessons.AddRangeAsync(studentLesson1, studentLesson2, studentLesson3, studentLesson4);
+
+            await studentContext.Certificates.AddRangeAsync(certificate);
+
+            await paymentContext.Payments.AddRangeAsync(payment);
+
+            await paymentContext.PaymentTransactions.AddRangeAsync(paymentTransaction);
+
+            await courseContext.SaveChangesAsync();
+            await studentContext.SaveChangesAsync();
+            await paymentContext.SaveChangesAsync();
         }
     }
 }

@@ -37,7 +37,15 @@
         }
 
         public override int GetHashCode() =>
-            HashCode.Combine(CardNumber, CardHolderName, ExpirationDate, SecurityCode);       
-    }
+            HashCode.Combine(CardNumber, CardHolderName, ExpirationDate, SecurityCode);
 
+        //Factory
+        public static class CreditCardFactory
+        {
+            public static CreditCard Create(string cardNumber, string cardHolderName, DateTime expirationDate, string securityCode)
+            {
+                return new CreditCard(cardNumber, cardHolderName, expirationDate, securityCode);
+            }
+        }
+    }
 }
