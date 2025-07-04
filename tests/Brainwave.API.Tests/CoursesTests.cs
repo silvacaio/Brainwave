@@ -106,7 +106,7 @@ public class CoursesTests
         await _fixture.PerformApiLogin("aluno1@brainwave.com", "Teste@123");
         _fixture.Client.AssignToken(_fixture.Token);
 
-        var courseId = await _fixture.GetDotNetCourse();
+        var courseId = await _fixture.GetDotNetCourseByStudentId(_fixture.StudentId);
 
         // Act
         var response = await _fixture.Client.PutAsync($"/api/courses/{courseId}/finish", null);

@@ -253,14 +253,20 @@ namespace Brainwave.API.Tests.Config
         }
 
 
-        public async Task<Guid> GetDotNetCourse()
+        public async Task<Guid> GetDotNetCourseByStudentId(Guid studentId)
         {
             var sql_enrollment = @"
                     select c.courseid from Enrollments c 
-                    where c.status = 1                   
+                    where c.status = 1        
+                    and c.studentid = @StudentId
                    ";
 
-            string? courseid = await ExecuteQuery<string>(sql_enrollment, param: null, result => result);
+            var parameters = new
+            {
+                StudentId = studentId
+            };
+
+            string? courseid = await ExecuteQuery<string>(sql_enrollment, param: parameters, result => result);            ;
 
             var sql = @$"
                     select c.Id from courses c 
@@ -413,7 +419,6 @@ namespace Brainwave.API.Tests.Config
 
         public async Task<Guid> GetenrollmentStudent2()
         {
-
             const string sql = @"
                     SELECT e.id
                     FROM enrollments e
@@ -447,6 +452,24 @@ namespace Brainwave.API.Tests.Config
                 Console.WriteLine($"Linhas afetadas: {rowsAffected}");
             }
 
+        }
+
+        internal async Task<Guid> GetEnrollmentWithCertificate(Guid studentId)
+        {
+            const string sql = @"
+                    SELECT e.id
+                    FROM enrollments e
+                    inner join certificates c on e.id = c.enrollmentid
+                    where e.studentId = @StudentId
+                    LIMIT 1;";
+
+            var parameters = new
+            {
+                StudentId = studentId
+            };
+
+            string? id = await ExecuteQuery<string>(sql, param: parameters, result => result);
+            return Guid.Parse(id);
         }
     }
 

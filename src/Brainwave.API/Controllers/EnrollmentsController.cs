@@ -58,6 +58,19 @@ namespace Brainwave.API.Controllers
 
             return CustomResponse(enrollment);
         }
+
+        [Authorize(Roles = "STUDENT")]
+        [HttpGet("{id:guid}/certificates/download")]
+        public async Task<IActionResult> DownloadCertificate(Guid id)
+        {
+            var certificate = await _studentQueries.GetCertificate(UserId, id);
+            if (certificate?.File == null || certificate.File.Length == 0)
+            {
+                return BadRequest();
+            }
+
+            return CustomResponse(certificate.File);
+        }
     }
 
 }

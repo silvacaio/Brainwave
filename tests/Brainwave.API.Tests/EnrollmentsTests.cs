@@ -1,5 +1,6 @@
 ﻿using Brainwave.API.Tests.Config;
 using  Brainwave.API.Tests.Config;
+using System.Net;
 
 namespace Brainwave.API.Tests;
 
@@ -45,5 +46,43 @@ public class EnrollmentsTests
 
         // Assert
         Assert.Contains("Course not found.", errors.ToString());
+    }
+
+    [Fact(DisplayName = "Download de certificado com sucesso")]
+    [Trait("Categoria", "Integração API - Aluno / Certificados")]
+    public async Task DownloadCertificate_DeveRetornarArquivoPdf_ComSucesso()
+    {
+        // Arrange
+        await _fixture.PerformApiLogin("aluno1@brainwave.com", "Teste@123");
+        _fixture.Client.AssignToken(_fixture.Token);
+
+        var id = await _fixture.GetEnrollmentWithCertificate(_fixture.StudentId); // método que simula/insere certificado no banco
+        var url = $"/api/enrollments/{id}/certificates/download";
+
+        // Act
+        var response = await _fixture.Client.GetAsync(url);
+
+        // Assert
+        response.EnsureSuccessStatusCode();
+    }
+
+    [Fact(DisplayName = "Download de certificado inexistente deve retornar BadRequest")]
+    [Trait("Categoria", "Integração API - Aluno / Certificados")]
+    public async Task DownloadCertificate_CertificateNotExists_DeveRetornarBadRequest()
+    {
+        // Arrange
+        await _fixture.PerformApiLogin("aluno1@brainwave.com", "Teste@123");
+        _fixture.Client.AssignToken(_fixture.Token);
+
+
+        var newId = Guid.NewGuid();
+        var url = $"/api/enrollments/{newId}/certificates/download";
+
+
+        // Act
+        var response = await _fixture.Client.GetAsync(url);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
 }
