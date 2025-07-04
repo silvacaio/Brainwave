@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Brainwave.ManagementPayment.Application.ValueObjects;
 using Brainwave.API.ViewModel;
 using Brainwave.ManagementCourses.Domain;
+using Microsoft.Data.SqlClient;
 
 
 namespace Brainwave.API.Tests.Config
@@ -408,15 +409,53 @@ namespace Brainwave.API.Tests.Config
 
                 return lesson;
             }
-
         }
 
-        public class LessonResult
+        public async Task<Guid> GetenrollmentStudent2()
         {
-            public string Id { get; private set; }
 
-            public string CourseId { get; set; }
+            const string sql = @"
+                    SELECT e.id
+                    FROM enrollments e
+                    inner join courses c on e.courseid = c.id
+                    inner join students s on e.studentid = s.id
+                    where s.name = 'aluno2@brainwave.com'
+                    LIMIT 1;";
+
+            string? id = await ExecuteQuery<string>(sql, param: null, result => result);
+            return Guid.Parse(id);
+        }
+
+        internal async Task ChangePaymentStatus(Guid enrollmentId, EnrollmentStatus status)
+        {
+            using (var connection = new SqliteConnection(ConnectionString))
+            {
+                string sql = @"
+                UPDATE enrollments
+                SET status = @Status
+                WHERE id = @EnrollmentId;
+                 ";
+
+                var parameters = new
+                {
+                    Status = status,
+                    EnrollmentId = enrollmentId
+                };
+
+                int rowsAffected = await connection.ExecuteAsync(sql, parameters);
+
+                Console.WriteLine($"Linhas afetadas: {rowsAffected}");
+            }
+
         }
     }
 
+    public class LessonResult
+    {
+        public string Id { get; private set; }
+
+        public string CourseId { get; set; }
+    }
 }
+
+

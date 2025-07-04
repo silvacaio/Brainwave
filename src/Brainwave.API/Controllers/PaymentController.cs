@@ -12,6 +12,8 @@ using System.Net;
 
 namespace Brainwave.API.Controllers
 {
+    [Route("api/payment")]
+
     public class PaymentController : MainController
     {
         private readonly IMediator _mediator;
@@ -33,13 +35,27 @@ namespace Brainwave.API.Controllers
         }
 
         [Authorize(Roles = "STUDENT")]
-        [HttpPost("{courseId:guid}/make-payment")]
+        [HttpPost("make-payment")]
         public async Task<IActionResult> MakePayment([FromBody] PaymentViewModel paymentData)
         {
-            if (_studentQueries.GetEnrollmentById(paymentData.EnrollmentId) == null)
+            var enrollment = await _studentQueries.GetEnrollmentById(paymentData.EnrollmentId);
+            if (enrollment == null)
             {
                 NotifyError("Enrollment", "The specified enrollment does not exist.");
                 return CustomResponse(HttpStatusCode.NotFound);
+            }
+
+            if (enrollment.StudentId != UserId)
+            {
+                NotifyError("Enrollment", "You do not have permission to make a payment for this enrollment.");
+                return CustomResponse(HttpStatusCode.Forbidden);
+            }
+
+
+            if (enrollment.Status != ManagementStudents.Domain.EnrollmentStatus.PendingPayment)
+            {
+                NotifyError("Enrollment", "The enrollment is not in a pending payment status.");
+                return CustomResponse(HttpStatusCode.BadRequest);
             }
 
             var command = new MakePaymentCommand(

@@ -80,7 +80,7 @@ namespace Brainwave.ManagementStudents.Data.Repository
 
         public async Task<Enrollment?> GetEnrollmentsById(Guid enrollmentId)
         {
-            return await _enrollmentDbSet.FindAsync(_enrollmentDbSet);
+            return await _enrollmentDbSet.FindAsync(enrollmentId);
         }
 
         public async Task<StudentLesson?> GetLessonByStudentIdAndCourseIdAndLessonId(Guid studentId, Guid courseId, Guid lessonId)

@@ -4,7 +4,7 @@
     {
         public bool CommitTransaction(string cardHashKey, string orderId, decimal amount)
         {
-            return new Random().Next(2) == 0;
+            return true;
             //return false;
         }
 
