@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.ManagementPayment
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.API.Tests", "tests\Brainwave.API.Tests\Brainwave.API.Tests.csproj", "{098D9AC1-F63D-4682-A873-A4C52C18ECA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brainwave.Core.Tests", "tests\Brainwave.Core.Tests\Brainwave.Core.Tests.csproj", "{17A7770D-590D-41FA-B1B9-21AF2264A977}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -133,6 +135,10 @@ Global
 		{098D9AC1-F63D-4682-A873-A4C52C18ECA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{098D9AC1-F63D-4682-A873-A4C52C18ECA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{098D9AC1-F63D-4682-A873-A4C52C18ECA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17A7770D-590D-41FA-B1B9-21AF2264A977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17A7770D-590D-41FA-B1B9-21AF2264A977}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17A7770D-590D-41FA-B1B9-21AF2264A977}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17A7770D-590D-41FA-B1B9-21AF2264A977}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -160,6 +166,7 @@ Global
 		{A86DE378-E91E-426A-A5EA-486CEFF8209F} = {C5CEA0B4-08FB-40DC-A986-E890F9C8D486}
 		{8F6A61DB-71D5-4A02-83F1-8FEA384EE19F} = {C5CEA0B4-08FB-40DC-A986-E890F9C8D486}
 		{098D9AC1-F63D-4682-A873-A4C52C18ECA7} = {C5CEA0B4-08FB-40DC-A986-E890F9C8D486}
+		{17A7770D-590D-41FA-B1B9-21AF2264A977} = {C5CEA0B4-08FB-40DC-A986-E890F9C8D486}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D32D4802-6B63-467E-BB50-77607290FDA4}
