@@ -3,7 +3,7 @@ using Brainwave.API.Tests.Config;
 using Brainwave.API.ViewModel;
 using PlataformaEducacao.Api.Tests.Config;
 
-namespace PlataformaEducacao.Api.Tests;
+namespace Brainwave.API.Tests;
 
 [TestCaseOrderer("Brainwave.API.Tests.Config.PriorityOrderer", "Brainwave.API.Tests")]
 [Collection(nameof(IntegrationApiTestsFixtureCollection))]

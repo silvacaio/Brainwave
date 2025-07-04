@@ -10,44 +10,43 @@ namespace Brainwave.ManagementCourses.Data.Repository
         protected readonly DbSet<Course> DbSet;
         protected readonly DbSet<Lesson> DbSetLesson;
 
-
         public CourseRepository(CoursesContext context)
         {
             _context = context;
             DbSet = _context.Set<Course>();
             DbSetLesson = _context.Set<Lesson>();
-
-            DbSet.AsNoTracking();
-            DbSetLesson.AsNoTracking();
-
         }
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public void Add(Course Course)
+        public void Add(Course course)
         {
-            _context.Courses.Add(Course);
+            _context.Courses.Add(course);
         }
 
-        public void Update(Course Course)
+        public void Update(Course course)
         {
-            _context.Courses.Update(Course);
+            _context.Courses.Update(course);
         }
 
         public async Task<IEnumerable<Course>> GetAll()
         {
-            return await _context.Courses.ToListAsync();
+            return await _context.Courses
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Course?> GetById(Guid id, bool addLessons = false)
         {
-            if (addLessons == false)
-                return await _context.Courses.FindAsync(id);
+            var query = _context.Courses
+                .Include(c => c.Syllabus) // Importante: garante que o ValueObject seja carregado
 
+                .AsQueryable();
 
-            return await _context.Courses
-                .Include(c => c.Lessons)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            if (addLessons)
+                query = query.Include(c => c.Lessons);
+
+            return await query.FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public void Add(Lesson lesson)
@@ -67,28 +66,39 @@ namespace Brainwave.ManagementCourses.Data.Repository
 
         public async Task<Course?> GetByTitle(string title)
         {
-            return await DbSet.FirstOrDefaultAsync(e => e.Title == title);
-
+            return await DbSet
+                .AsNoTracking()
+                .FirstOrDefaultAsync(e => e.Title == title);
         }
 
         public void Delete(Course course)
         {
+            _context.Attach(course);
+            _context.Entry(course).State = EntityState.Deleted;
+
             DbSet.Remove(course);
         }
 
         public async Task<IEnumerable<Course>> GetCoursesNotIn(Guid[] enrolledCourseIds)
         {
-            return DbSet.Where(c => !enrolledCourseIds.Contains(c.Id));
+            return await DbSet
+                .AsNoTracking()
+                .Where(c => !enrolledCourseIds.Contains(c.Id))
+                .ToListAsync();
         }
 
         public async Task<Lesson?> GetLessonByCourseIdAndTitle(Guid courseId, string title)
         {
-            return await DbSetLesson.Where(l => l.CourseId == courseId && l.Title == title).FirstOrDefaultAsync();
+            return await DbSetLesson
+                .AsNoTracking()
+                .FirstOrDefaultAsync(l => l.CourseId == courseId && l.Title == title);
         }
 
         public async Task<Lesson?> GetLessonByIdAndCourseId(Guid lessonId, Guid courseId)
         {
-            return await DbSetLesson.Where(l => l.CourseId == courseId && l.Id == lessonId).FirstOrDefaultAsync();
+            return await DbSetLesson
+                .AsNoTracking()
+                .FirstOrDefaultAsync(l => l.CourseId == courseId && l.Id == lessonId);
         }
     }
 }

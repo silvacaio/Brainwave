@@ -188,12 +188,16 @@ namespace Brainwave.API.Configurations
             course2.AddLesson(lesson6);
 
 
+            var course3 = Course.CourseFactory.New("Test", 100, new Syllabus("Test content", 30, "English"));
+
+
+
             // Enrollment
-            var enrollmentDone = EnrollmentDone.Create(student.Id, course.Id);
+            var enrollmentDone = EnrollmentDone.Create(student2.Id, student2.Id);
 
             var enrollmentPendingPayment = EnrollmentPendingPayment.Create(student2.Id, course.Id);
 
-            var enrollmentActive = EnrollmentActive.Create(student2.Id, course2.Id);
+            var enrollmentActive = EnrollmentActive.Create(student.Id, course.Id);
 
             //StudentLesson 1
 
@@ -215,7 +219,7 @@ namespace Brainwave.API.Configurations
             //PaymentTransaction
             var paymentTransaction = PaymentTransaction.PaymentTransactionFactory.Paid(enrollmentDone.Id, payment.Id, course.Value);
 
-            await courseContext.Courses.AddRangeAsync(course, course2);
+            await courseContext.Courses.AddRangeAsync(course, course2, course3);
 
             await courseContext.Lessons.AddRangeAsync(lesson1, lesson2, lesson3, lesson4, lesson5, lesson6);
 

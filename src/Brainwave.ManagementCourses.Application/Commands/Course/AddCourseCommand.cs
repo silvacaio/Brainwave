@@ -16,11 +16,11 @@ namespace Brainwave.ManagementCourses.Application.Commands.Course
             Value = value;
         }
 
-        public string Title { get; private set; }
+        public string Title { get; set; }
         public string SyllabusContent { get; set; }
         public int SyllabusDurationInHours { get; set; }
         public string SyllabusLanguage { get; set; }
-        public Guid UserId { get; private set; }
+        public Guid UserId { get; set; }
         public decimal Value { get; set; }
 
 

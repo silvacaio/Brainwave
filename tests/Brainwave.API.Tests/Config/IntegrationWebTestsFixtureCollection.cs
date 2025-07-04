@@ -223,7 +223,7 @@ namespace Brainwave.API.Tests.Config
         {
             var userData = new LoginUserViewModel()
             {
-                Email = email ?? "admin@teste.com",
+                Email = email ?? "admin@brainwave.com",
                 Password = password ?? "Teste@123"
             };
 
@@ -250,9 +250,28 @@ namespace Brainwave.API.Tests.Config
             SaveUserToken(await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<Guid> GetCourseId()
+
+        public async Task<Guid> GetDotNetCourse()
         {
-            var response = await Client.GetAsync("/api/cursos");
+            var sql_enrollment = @"
+                    select c.courseid from Enrollments c 
+                    where c.status = 1                   
+                   ";
+
+            string? courseid = await ExecuteQuery<string>(sql_enrollment, param: null, result => result);
+
+            var sql = @$"
+                    select c.Id from courses c 
+                    where c.id = '{courseid}'               
+                   ";
+
+            string? id = await ExecuteQuery<string>(sql, param: null, result => result);
+            return Guid.Parse(id);
+        }
+
+        public async Task<Guid> GetFirstCourseId()
+        {
+            var response = await Client.GetAsync("/api/courses");
             response.EnsureSuccessStatusCode();
 
             var data = await response.Content.ReadAsStringAsync();
@@ -260,38 +279,64 @@ namespace Brainwave.API.Tests.Config
             var json = JsonSerializer.Deserialize<JsonElement>(data);
             return json.GetProperty("data")[0].GetProperty("id").GetGuid();
         }
+        public async Task<Guid> GetSecondCourseId()
+        {
+            var response = await Client.GetAsync("/api/courses");
+            response.EnsureSuccessStatusCode();
 
-        public async Task GetCourseIdWithoutLessons()
+            var data = await response.Content.ReadAsStringAsync();
+
+            var json = JsonSerializer.Deserialize<JsonElement>(data);
+            return json.GetProperty("data")[1].GetProperty("id").GetGuid();
+        }
+        public async Task<Guid> GetCourseWithoutLessons()
         {
             var sql = @"
-                    select c.Id from Courses c 
-                    left join Lessons l on l.CourseId = c.Id
-                    where l.Id is null
+                    select c.Id from courses c 
+                    left join lessons a on a.courseid = c.id
+                    where a.Id is null 
                    ";
-            await ExecuteQuery(sql, param: null, (result) =>
-            {
-                if (result != null)
-                {
-                    CourseId = Guid.Parse(result.Id);
-                }
-                return result;
-            });
+
+            string? id = await ExecuteQuery<string>(sql, param: null, result => result);
+            return Guid.Parse(id);
         }
 
-        public async Task GetCourseLearningHistory()
+        public async Task<Guid> GetCourseWithLessons()
         {
             var sql = @"
-                    select c.Id from Courses c 
-                    join CourseProgress cp on cp.CourseId = c.Id
+                    select c.Id from courses c 
+                    inner join lessons a on a.courseid = c.id                    
                    ";
-            await ExecuteQuery(sql, param: null, (result) =>
-            {
-                if (result != null)
-                {
-                    CourseId = Guid.Parse(result.Id);
-                }
-                return result;
-            });
+
+            string? id = await ExecuteQuery<string>(sql, param: null, result => result);
+            return Guid.Parse(id);
+        }
+
+        public async Task<CourseCompletion> GetCourse_UnfinishedLessonsLessons()
+        {
+            using var connection = new SqliteConnection(ConnectionString);
+            await connection.OpenAsync();
+
+            var query = @"
+                SELECT sl.UserId, sl.CourseId
+                FROM StudentLessons sl
+                GROUP BY sl.UserId, sl.CourseId
+                HAVING COUNT(DISTINCT sl.LessonId) < (
+                    SELECT COUNT(*)
+                    FROM Lessons l
+                    WHERE l.CourseId = sl.CourseId
+                )
+            ";
+
+            var completions = await connection.QueryAsync<CourseCompletion>(query);
+            return completions.FirstOrDefault();
+
+        }
+
+        public class CourseCompletion
+        {
+            public string UserId { get; set; }
+            public string CourseId { get; set; }
         }
 
         public async Task GetCertificateId()
@@ -330,6 +375,7 @@ namespace Brainwave.API.Tests.Config
             await connection.CloseAsync();
             return process(result);
         }
+
     }
 
 }
