@@ -21,26 +21,24 @@ namespace Brainwave.ManagementCourses.Data.Repository
 
         public void Add(Course course)
         {
-            _context.Courses.Add(course);
+            DbSet.Add(course);
         }
 
         public void Update(Course course)
         {
-            _context.Courses.Update(course);
+            DbSet.Update(course);
         }
 
         public async Task<IEnumerable<Course>> GetAll()
         {
-            return await _context.Courses
+            return await DbSet
                 .AsNoTracking()
                 .ToListAsync();
         }
 
         public async Task<Course?> GetById(Guid id, bool addLessons = false)
         {
-            var query = _context.Courses
-                .Include(c => c.Syllabus) // Importante: garante que o ValueObject seja carregado
-
+            var query = DbSet
                 .AsQueryable();
 
             if (addLessons)
@@ -51,12 +49,12 @@ namespace Brainwave.ManagementCourses.Data.Repository
 
         public void Add(Lesson lesson)
         {
-            _context.Lessons.Add(lesson);
+            DbSetLesson.Add(lesson);
         }
 
         public void Update(Lesson lesson)
         {
-            _context.Lessons.Update(lesson);
+            DbSetLesson.Update(lesson);
         }
 
         public void Dispose()
@@ -73,7 +71,9 @@ namespace Brainwave.ManagementCourses.Data.Repository
 
         public void Delete(Course course)
         {
-            DbSet.Remove(course);
+            _context.Attach(course);
+            _context.Entry(course.Syllabus).State = EntityState.Deleted;
+            _context.Courses.Remove(course);
         }
 
         public async Task<IEnumerable<Course>> GetCoursesNotIn(Guid[] enrolledCourseIds)

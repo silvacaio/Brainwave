@@ -55,8 +55,6 @@ namespace Brainwave.ManagementCourses.Data
             modelBuilder.ApplyConfiguration(new CourseConfiguration());
             modelBuilder.ApplyConfiguration(new LessonConfiguration());
 
-
-
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 foreach (var property in entityType.GetProperties().Where(p => p.ClrType == typeof(string)))
@@ -83,21 +81,23 @@ namespace Brainwave.ManagementCourses.Data
         {
             builder.HasKey(c => c.Id);
 
-            builder.OwnsOne(c => c.Syllabus);
+            builder.OwnsOne(c => c.Syllabus, syllabus =>
+            {
+                syllabus.Property(s => s.Content)
+                    .HasColumnName("SyllabusContent")
+                   ;
 
-            builder.OwnsOne(c => c.Syllabus).
-                Property(s => s.Content).HasColumnName("SyllabusContent").IsRequired();
+                syllabus.Property(s => s.DurationInHours)
+                    .HasColumnName("SyllabusDurationInHours")
+                    ;
 
-            builder.OwnsOne(c => c.Syllabus).
-            Property(s => s.DurationInHours).HasColumnName("SyllabusDurationInHours").IsRequired();
+                syllabus.Property(s => s.Language)
+                    .HasColumnName("SyllabusLanguage")
+                    ;
 
-            builder.OwnsOne(c => c.Syllabus).
-            Property(s => s.Language).HasColumnName("SyllabusLanguage").IsRequired();
-
-         
-
+                syllabus.WithOwner();
+            });
         }
-
     }
 
     public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
