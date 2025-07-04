@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Json;
 using Brainwave.API.Tests.Config;
 using Brainwave.API.ViewModel;
-using PlataformaEducacao.Api.Tests.Config;
+using  Brainwave.API.Tests.Config;
 
 namespace Brainwave.API.Tests;
 
@@ -42,8 +42,8 @@ public class UserTests
         // Arrange
         var data = new LoginUserViewModel()
         {
-            Email = _fixture.UserEmail,
-            Password = _fixture.UserPassword,
+            Email = "admin@brainwave.com",
+            Password = "Teste@123"
         };
 
         // Act

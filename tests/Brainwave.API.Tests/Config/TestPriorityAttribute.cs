@@ -1,7 +1,7 @@
 ﻿using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace PlataformaEducacao.Api.Tests.Config;
+namespace  Brainwave.API.Tests.Config;
 
 [AttributeUsage(AttributeTargets.Method)]
 public class TestPriorityAttribute : Attribute

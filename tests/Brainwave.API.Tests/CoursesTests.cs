@@ -2,16 +2,14 @@
 using Bogus;
 using Brainwave.API.Tests.Config;
 using Brainwave.API.ViewModel;
-using Brainwave.ManagementCourses.Domain;
-using PlataformaEducacao.Api.Tests.Config;
 
 namespace Brainwave.API.Tests;
 
 [Collection(nameof(IntegrationApiTestsFixtureCollection))]
-public class CourseLessonTests
+public class CoursesTests
 {
     private readonly IntegrationTestsFixture _fixture;
-    public CourseLessonTests(IntegrationTestsFixture fixture)
+    public CoursesTests(IntegrationTestsFixture fixture)
     {
         _fixture = fixture;
     }

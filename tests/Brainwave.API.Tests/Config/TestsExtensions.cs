@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Headers;
 
-namespace PlataformaEducacao.Api.Tests.Config;
+namespace  Brainwave.API.Tests.Config;
 
 public static class TestsExtensions
 {

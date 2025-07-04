@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Brainwave.ManagementPayment.Application.ValueObjects;
 using Brainwave.API.ViewModel;
+using Brainwave.ManagementCourses.Domain;
 
 
 namespace Brainwave.API.Tests.Config
@@ -376,6 +377,31 @@ namespace Brainwave.API.Tests.Config
             return process(result);
         }
 
+        public async Task<LessonResult> EnsureStudentHasActiveEnrollmentWithProgress()
+        {
+            using (var connection = new SqliteConnection(ConnectionString))
+            {
+                await connection.OpenAsync();
+
+                const string sql = @"
+                    SELECT id, courseid
+                    FROM Lessons
+                    WHERE Title = @Title
+                    LIMIT 1;";
+
+                var lesson = await connection.QueryFirstOrDefaultAsync<LessonResult>(sql, new { Title = "Lesson 5" });
+
+                return lesson;
+            }
+
+        }
+
+        public class LessonResult
+        {
+            public string Id { get; private set; }
+
+            public string CourseId { get; set; }
+        }
     }
 
 }

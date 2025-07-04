@@ -73,9 +73,6 @@ namespace Brainwave.ManagementCourses.Data.Repository
 
         public void Delete(Course course)
         {
-            _context.Attach(course);
-            _context.Entry(course).State = EntityState.Deleted;
-
             DbSet.Remove(course);
         }
 

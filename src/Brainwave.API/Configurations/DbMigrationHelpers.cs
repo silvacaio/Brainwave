@@ -182,22 +182,22 @@ namespace Brainwave.API.Configurations
             var course2 = Course.CourseFactory.New("Unit Tests", 50, new Syllabus("Test content", 10, "English"));
             var lesson4 = Lesson.LessonFactory.New(course.Id, "Lesson 4", "Test", "pdf");
             var lesson5 = Lesson.LessonFactory.New(course.Id, "Lesson 5", "Test", "ADB");
-            var lesson6 = Lesson.LessonFactory.New(course.Id, "Lesson 6", "Test", "SDASDASDASDASDAD");
             course2.AddLesson(lesson4);
             course2.AddLesson(lesson5);
-            course2.AddLesson(lesson6);
-
 
             var course3 = Course.CourseFactory.New("Test", 100, new Syllabus("Test content", 30, "English"));
 
 
 
             // Enrollment
-            var enrollmentDone = EnrollmentDone.Create(student2.Id, student2.Id);
+            var enrollmentActive2 = EnrollmentActive.Create(student2.Id, course2.Id);
 
             var enrollmentPendingPayment = EnrollmentPendingPayment.Create(student2.Id, course.Id);
 
             var enrollmentActive = EnrollmentActive.Create(student.Id, course.Id);
+
+            var enrollmentDone = EnrollmentDone.Create(student.Id, course2.Id);
+
 
             //StudentLesson 1
 
@@ -221,11 +221,11 @@ namespace Brainwave.API.Configurations
 
             await courseContext.Courses.AddRangeAsync(course, course2, course3);
 
-            await courseContext.Lessons.AddRangeAsync(lesson1, lesson2, lesson3, lesson4, lesson5, lesson6);
+            await courseContext.Lessons.AddRangeAsync(lesson1, lesson2, lesson3, lesson4, lesson5);
 
             await studentContext.Students.AddRangeAsync(admin, student, student2);
 
-            await studentContext.Enrollments.AddRangeAsync(enrollmentDone, enrollmentPendingPayment, enrollmentActive);
+            await studentContext.Enrollments.AddRangeAsync(enrollmentDone, enrollmentPendingPayment, enrollmentActive, enrollmentActive2);
 
             await studentContext.StudentLessons.AddRangeAsync(studentLesson1, studentLesson2, studentLesson3, studentLesson4);
 
