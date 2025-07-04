@@ -340,6 +340,21 @@ namespace Brainwave.API.Tests.Config
             public string CourseId { get; set; }
         }
 
+        public async Task<Guid> GetCourseWithoutEnrollment()
+        {
+            var sql = @"
+        SELECT c.Id, c.Title, c.Value
+        FROM Courses c
+        LEFT JOIN Enrollments e ON c.Id = e.CourseId
+        WHERE e.CourseId IS NULL;
+    ";
+
+            string? id = await ExecuteQuery<string>(sql, param: null, result => result);
+            return Guid.Parse(id);
+        }
+
+
+
         public async Task GetCertificateId()
         {
             var sql = @"select c.Id from Certificates c";

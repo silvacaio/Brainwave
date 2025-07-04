@@ -20,7 +20,7 @@ public class EnrollmentsTests
         await _fixture.PerformApiLogin("aluno2@brainwave.com", "Teste@123");
         _fixture.Client.AssignToken(_fixture.Token);
 
-        var courseId = await _fixture.GetFirstCourseId();
+        var courseId = await _fixture.GetCourseWithoutEnrollment();
 
         // Act
         var response = await _fixture.Client.PostAsync($"/api/enrollments/{courseId}", null);

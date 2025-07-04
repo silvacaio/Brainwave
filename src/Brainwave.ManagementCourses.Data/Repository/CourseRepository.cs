@@ -46,7 +46,7 @@ namespace Brainwave.ManagementCourses.Data.Repository
             if (addLessons)
                 query = query.Include(c => c.Lessons);
 
-            return await query.FirstOrDefaultAsync(c => c.Id == id);
+            return await query.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public void Add(Lesson lesson)
