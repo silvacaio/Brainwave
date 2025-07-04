@@ -16,6 +16,12 @@ namespace Brainwave.ManagementCourses.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
+            base.OnConfiguring(optionsBuilder);
+        }
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var entityEntry in ChangeTracker.Entries<Entity>())
@@ -46,11 +52,8 @@ namespace Brainwave.ManagementCourses.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // modelBuilder.ApplyConfiguration(new CourseConfiguration());
-            //   modelBuilder.ApplyConfiguration(new LessonConfiguration());
-            //            modelBuilder.ApplyConfiguration(new ProgressLessonsConfiguration());
-
-
+            modelBuilder.ApplyConfiguration(new CourseConfiguration());
+            modelBuilder.ApplyConfiguration(new LessonConfiguration());
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
@@ -76,25 +79,40 @@ namespace Brainwave.ManagementCourses.Data
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {
-
             builder.HasKey(c => c.Id);
 
             builder.OwnsOne(c => c.Syllabus, syllabus =>
-                {
-                    syllabus.Property(s => s.Content)
-                            .HasColumnName("SyllabusContent")
-                            .IsRequired();
+            {
+                syllabus.Property(s => s.Content)
+                    .HasColumnName("SyllabusContent")
+                   ;
 
-                    syllabus.Property(s => s.DurationInHours)
-                            .HasColumnName("SyllabusDurationInHours")
-                            .IsRequired();
+                syllabus.Property(s => s.DurationInHours)
+                    .HasColumnName("SyllabusDurationInHours")
+                    ;
 
-                    syllabus.Property(s => s.Language)
-                            .HasColumnName("SyllabusLanguage")
-                            .IsRequired();
-                });
+                syllabus.Property(s => s.Language)
+                    .HasColumnName("SyllabusLanguage")
+                    ;
+
+                syllabus.WithOwner();
+            });
         }
-        
+    }
+
+    public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
+    {
+        public void Configure(EntityTypeBuilder<Lesson> builder)
+        {
+
+            builder.HasKey(c => c.Id);
+
+            builder.HasOne(ct => ct.Course)
+                .WithMany(s => s.Lessons)
+                .HasForeignKey(ct => ct.CourseId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+
     }
 
 }

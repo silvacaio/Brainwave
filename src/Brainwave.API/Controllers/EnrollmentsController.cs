@@ -32,9 +32,9 @@ namespace Brainwave.API.Controllers
         [HttpPost("{courseId:guid}")]
         public async Task<IActionResult> Add(Guid courseId)
         {
-            if (_courseQueries.GetById(courseId) == null)
+            if (await _courseQueries.GetById(courseId) == null)
             {
-                NotifyError("Course", "The specified course does not exist.");
+                NotifyError("Course", "Course not found.");
                 return CustomResponse(HttpStatusCode.NotFound);
             }
 
@@ -46,7 +46,7 @@ namespace Brainwave.API.Controllers
 
 
         [Authorize(Roles = "STUDENT,ADMIN")]
-        [HttpPost("{enrollmentId:guid}")]
+        [HttpGet("{enrollmentId:guid}")]
         public async Task<IActionResult> Get(Guid enrollmentId)
         {
             var enrollment = await _studentQueries.GetEnrollmentById(enrollmentId);
@@ -57,6 +57,19 @@ namespace Brainwave.API.Controllers
             }
 
             return CustomResponse(enrollment);
+        }
+
+        [Authorize(Roles = "STUDENT")]
+        [HttpGet("{id:guid}/certificates/download")]
+        public async Task<IActionResult> DownloadCertificate(Guid id)
+        {
+            var certificate = await _studentQueries.GetCertificate(UserId, id);
+            if (certificate?.File == null || certificate.File.Length == 0)
+            {
+                return BadRequest();
+            }
+
+            return CustomResponse(certificate.File);
         }
     }
 

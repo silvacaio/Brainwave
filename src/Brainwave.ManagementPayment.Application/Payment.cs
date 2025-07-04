@@ -26,5 +26,20 @@ namespace Brainwave.ManagementPayment.Application
         // EF. Rel.
 
         public PaymentTransaction Transaction { get; private set; }
+
+        //Factory
+        public static class PaymentFactory
+        {
+            public static Payment Create(Guid enrollmentId, decimal value)
+            {
+                return new Payment(enrollmentId, value);
+            }
+            public static Payment WithCreditCard(Guid enrollmentId, decimal value, CreditCard creditCard)
+            {
+                var payment = new Payment(enrollmentId, value);
+                payment.AddCreditCard(creditCard);
+                return payment;
+            }
+        }
     }
 }

@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Brainwave.ManagementStudents.Application.Commands.Enrollment
 {
-      public class FinishEnrollmentCommand(Guid studentId, Guid courseId) : Command
+      public class FinishEnrollmentCommand(Guid courseId, Guid studentId) : Command
     {
         public Guid StudentId { get; set; } = studentId;
         public Guid CourseId { get; set; } = courseId;

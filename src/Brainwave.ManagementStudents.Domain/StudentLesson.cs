@@ -9,6 +9,7 @@ namespace Brainwave.ManagementStudents.Domain
         public Guid LessonId { get; private set; }
         public Guid CourseId { get; private set; }
 
+        public Student Student { get; set; }
 
         public StudentLesson(Guid userId, Guid courseId, Guid lessonId)
         {

@@ -38,5 +38,13 @@ namespace Brainwave.ManagementStudents.Domain
             if (string.IsNullOrWhiteSpace(CourseName))
                 throw new DomainException("The Course Name field is required.");
         }
+
+        public static class CertificateFactory
+        {
+            public static Certificate Create(string studentName, string courseName, Guid enrollmentId, Guid studentId)
+            {
+                return new Certificate(studentName, courseName, enrollmentId, studentId);
+            }
+        }   
     }
 }

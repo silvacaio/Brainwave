@@ -49,6 +49,8 @@ namespace Brainwave.ManagementStudents.Data
             modelBuilder.ApplyConfiguration(new StudentConfiguration());
             modelBuilder.ApplyConfiguration(new EnrollmentConfiguration());
             modelBuilder.ApplyConfiguration(new CertificateConfiguration());
+            modelBuilder.ApplyConfiguration(new StudentLessonConfiguration());
+
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
@@ -84,7 +86,7 @@ namespace Brainwave.ManagementStudents.Data
             builder.HasKey(a => a.Id);
 
             builder.HasOne(ct => ct.Student)
-                 .WithMany()
+                 .WithMany(s => s.Certificates)
                  .HasForeignKey(ct => ct.StudentId)
                  .OnDelete(DeleteBehavior.Cascade);
         }
@@ -99,6 +101,20 @@ namespace Brainwave.ManagementStudents.Data
             builder.HasOne(e => e.Student)
             .WithMany(s => s.Enrollments)
             .HasForeignKey(e => e.StudentId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        }
+    }
+
+    public class StudentLessonConfiguration : IEntityTypeConfiguration<StudentLesson>
+    {
+        public void Configure(EntityTypeBuilder<StudentLesson> builder)
+        {
+            builder.HasKey(a => a.Id);
+
+            builder.HasOne(e => e.Student)
+            .WithMany(s => s.StudentLesson)
+            .HasForeignKey(e => e.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
         }

@@ -2,7 +2,7 @@
 
 namespace Brainwave.ManagementCourses.Domain.ValueObjects
 {
-    public class Syllabus
+    public class Syllabus 
     {
         public Syllabus(string content, int durationInHours, string language)
         {
